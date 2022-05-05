@@ -4,7 +4,7 @@
     <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
     <div class="navbar navbar-expand-lg navbar-light bg-light navbar-sticky" data-fixed-element>
       <div class="container px-0 px-xl-3">
-        <a href="index.html" class="navbar-brand order-lg-1 mr-0 pr-lg-3 mr-lg-4">
+        <a routerLink="/" class="navbar-brand order-lg-1 mr-0 pr-lg-3 mr-lg-4">
           <img src="assets/img/ecommerce/logo.svg" alt="Createx Logo" width="130">
         </a>
         <!-- Search desktop -->
@@ -18,10 +18,18 @@
         <div class="d-flex align-items-center order-lg-3">
           <ul class="nav nav-tools flex-nowrap">
             <li class="nav-item d-lg-block d-none mb-0">
-              <a href="account-wishlist.html" class="nav-tool">
-                <i class="cxi-heart nav-tool-icon"></i>
-                <span class="nav-tool-label">2</span>
-              </a>
+              <ng-container *ngIf="user_lc == undefined">
+                <a routerLink="/login" class="nav-tool">
+                  <i class="cxi-profile nav-tool-icon"></i>
+                  <span class="nav-tool-label">Iniciar Sesión</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="user_lc">
+                <a class="nav-tool">
+                  <i class="cxi-profile nav-tool-icon"></i>
+                  <span class="nav-tool-label">{{user_lc.first_name}}</span>
+                </a>
+              </ng-container>
             </li>
             <li class="divider-vertical mb-0 d-lg-block d-none"></li>
             <li class="nav-item align-self-center mb-0">
@@ -52,7 +60,7 @@
           <!-- Menu -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a href="index.html" class="nav-link active">Home</a>
+              <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Inicio</a>
             </li>
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Shop</a>
