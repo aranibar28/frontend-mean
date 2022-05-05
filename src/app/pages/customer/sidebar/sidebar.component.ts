@@ -1,21 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer.service';
-import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
 })
-export class NavComponent implements OnInit {
+export class SidebarComponent implements OnInit {
   public id: any;
   public user: any = undefined;
   public user_lc: any = undefined;
 
-  constructor(
-    private customerService: CustomerService,
-    private router: Router
-  ) {
+  constructor(private customerService: CustomerService) {
     this.id = localStorage.getItem('id');
     if (this.id) {
       this.customerService.list_customer_by_id_invited(this.id).subscribe({
@@ -37,20 +32,4 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  logout() {
-    Swal.fire({
-      text: '¿Quieres cerrar sesión?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.clear();
-        this.router.navigateByUrl('/');
-        window.location.reload();
-      }
-    });
-  }
 }

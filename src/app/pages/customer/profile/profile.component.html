@@ -1,0 +1,90 @@
+<main class="cs-page-wrapper">
+<nav class="bg-secondary mb-3" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb-alt mb-0">
+        <li class="breadcrumb-item">
+            <a routerLink="/"><i class="cxi-home"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Mi Perfil</li>
+        </ol>
+    </div>
+</nav>
+
+  <section class="container pt-3 pt-lg-4 pb-5 pb-lg-6">
+    <div class="row pb-2 pb-lg-0">
+
+      <aside class="col-xl-3 col-lg-4 pb-3 mb-4 mb-lg-0">
+        <app-sidebar></app-sidebar>
+      </aside>
+      
+      <div class="col-lg-8 ml-auto">
+        <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
+          <h1 class="h2 mb-0">Mi Perfil</h1>
+        </div>
+        <form [formGroup]="myForm" (ngSubmit)="update()">
+          <div class="row pb-3">
+            <div class="col-sm-6 form-group">
+              <label>Nombre</label>
+              <input formControlName="first_name" type="text" class="form-control form-control-lg"  placeholder="Nombres"
+              [ngClass]="{ 'is-invalid': validate('first_name', true), 'is-valid': validate('first_name', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Apellido</label>
+              <input formControlName="last_name" type="text" class="form-control form-control-lg" placeholder="Apellidos"
+              [ngClass]="{ 'is-invalid': validate('last_name', true), 'is-valid': validate('last_name', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Correo Electrónico</label>
+              <input formControlName="email" type="email" class="form-control form-control-lg" placeholder="Correo Electrónico" readonly
+              [ngClass]="{ 'is-invalid': validate('email', true), 'is-valid': validate('email', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Contraseña</label>
+              <input formControlName="password" type="password" class="form-control form-control-lg" placeholder="Nueva Contraseña" autocomplete="new-password"
+              [ngClass]="{ 'is-invalid': validate('password', true), 'is-valid': validate('password', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Teléfono</label>
+              <input formControlName="phone" type="text" class="form-control form-control-lg" placeholder="Teléfono"
+              [ngClass]="{ 'is-invalid': validate('phone', true), 'is-valid': validate('phone', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>DNI</label>
+              <input formControlName="dni" type="text" class="form-control form-control-lg" placeholder="DNI"
+              [ngClass]="{ 'is-invalid': validate('dni', true), 'is-valid': validate('dni', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Fecha de Nacimiento</label>
+              <input formControlName="birthday" type="date" class="form-control form-control-lg"
+              [ngClass]="{ 'is-invalid': validate('birthday', true), 'is-valid': validate('birthday', false) }">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Género</label>
+              <select formControlName="gender" class="custom-select custom-select-lg" 
+              [ngClass]="{ 'is-invalid': validate('gender', true), 'is-valid': validate('gender', false) }">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>País</label>
+              <select formControlName="country" class="custom-select custom-select-lg" 
+              [ngClass]="{ 'is-invalid': validate('country', true), 'is-valid': validate('country', false) }">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Bolivia">Bolivia</option>
+                <option value="Chile">Chile</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Perú">Perú</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">&nbsp;Actualizar datos&nbsp;</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>

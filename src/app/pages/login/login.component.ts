@@ -40,8 +40,13 @@ export class LoginComponent implements OnInit {
           this.customer = res.data;
           localStorage.setItem('token', res.token);
           localStorage.setItem('id', res.data._id);
-
           this.router.navigateByUrl('/');
+          Swal.fire({
+            icon: 'success',
+            title: `Bienvenido ${res.data.first_name}!!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         },
         error: (err) => {
           Swal.fire('Ups!', err.error.msg, 'error');
