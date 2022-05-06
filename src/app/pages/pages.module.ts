@@ -11,6 +11,7 @@ import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './customer/profile/profile.component';
 import { SidebarComponent } from './customer/sidebar/sidebar.component';
 import { IndexProductComponent } from './products/index-product/index-product.component';
+import { ImagePipe } from '../pipes/image.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { IndexProductComponent } from './products/index-product/index-product.co
     ProfileComponent,
     SidebarComponent,
     IndexProductComponent,
+    ImagePipe
   ],
   imports: [
     CommonModule,

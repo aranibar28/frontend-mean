@@ -11,14 +11,14 @@ export class SidebarComponent implements OnInit {
   public user_lc: any = undefined;
 
   constructor(private customerService: CustomerService) {
-    this.id = localStorage.getItem('id');
+    this.id = customerService.id;
     if (this.id) {
       this.customerService.list_customer_by_id_invited(this.id).subscribe({
         next: (res) => {
           this.user = res.data;
-          localStorage.setItem('user_data', JSON.stringify(this.user));
-          if (localStorage.getItem('user_data')) {
-            this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+          localStorage.setItem('public_user', JSON.stringify(this.user));
+          if (localStorage.getItem('public_user')) {
+            this.user_lc = JSON.parse(localStorage.getItem('public_user')!);
           } else {
             this.user_lc = undefined;
           }

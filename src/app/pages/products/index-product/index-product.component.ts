@@ -8,21 +8,33 @@ declare var $: any;
   templateUrl: './index-product.component.html',
 })
 export class IndexProductComponent implements OnInit {
-  public categories: any;
+  public categories: Array<any> = [];
+  public products: Array<any> = [];
   public filter_category = '';
-  public config_global: any = {};
+  public filter_product = '';
+  public load_data = true;
 
   constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.list_categories();
+    this.list_products();
     this.slider();
   }
 
   list_categories() {
     this.customerService
-      .get_config_public()
+      .list_categories_public()
       .subscribe(({ data: { categories } }) => (this.categories = categories));
+  }
+
+  list_products() {
+    this.customerService.list_products_public(this.filter_product).subscribe({
+      next: (res) => {
+        this.products = res.data;
+        this.load_data = false;
+      },
+    });
   }
 
   search_category() {
@@ -34,6 +46,10 @@ export class IndexProductComponent implements OnInit {
     } else {
       this.list_categories();
     }
+  }
+
+  search_product() {
+    this.list_products();
   }
 
   slider() {

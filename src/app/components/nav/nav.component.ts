@@ -17,14 +17,14 @@ export class NavComponent implements OnInit {
     private customerService: CustomerService,
     private router: Router
   ) {
-    this.id = localStorage.getItem('id');
+    this.id = customerService.id;
     if (this.id) {
       this.customerService.list_customer_by_id_invited(this.id).subscribe({
         next: (res) => {
           this.user = res.data;
-          localStorage.setItem('user_data', JSON.stringify(this.user));
-          if (localStorage.getItem('user_data')) {
-            this.user_lc = JSON.parse(localStorage.getItem('user_data')!);
+          localStorage.setItem('public_user', JSON.stringify(this.user));
+          if (localStorage.getItem('public_user')) {
+            this.user_lc = JSON.parse(localStorage.getItem('public_user')!);
           } else {
             this.user_lc = undefined;
           }
@@ -43,7 +43,7 @@ export class NavComponent implements OnInit {
 
   list_categories() {
     this.customerService
-      .get_config_public()
+      .list_categories_public()
       .subscribe(({ data: { categories } }) => (this.categories = categories));
   }
 

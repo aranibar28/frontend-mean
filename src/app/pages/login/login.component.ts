@@ -35,11 +35,11 @@ export class LoginComponent implements OnInit {
         password: this.user.password,
       };
 
-      this.customerService.login_customer(data).subscribe({
+      this.customerService.login_customer_invited(data).subscribe({
         next: (res) => {
           this.customer = res.data;
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('id', res.data._id);
+          localStorage.setItem('public_token', res.token);
+          localStorage.setItem('public_id', res.data._id);
           this.router.navigateByUrl('/');
           Swal.fire({
             icon: 'success',

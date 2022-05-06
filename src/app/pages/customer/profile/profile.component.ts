@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import Swal from 'sweetalert2';
-declare var $ :any;
+declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -19,13 +24,11 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder
   ) {
-    this.id = localStorage.getItem('id');
+    this.id = customerService.id;
     if (this.id) {
       this.init_data();
     }
   }
-
-  ngOnInit(): void {}
 
   myForm: FormGroup = this.fb.group({
     first_name: [, [Validators.required, Validators.minLength(3)]],
@@ -63,6 +66,8 @@ export class ProfileComponent implements OnInit {
       error: (err) => console.log(err),
     });
   }
+
+  ngOnInit(): void {}
 
   update() {
     if (this.myForm.invalid) {

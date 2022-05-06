@@ -11,8 +11,16 @@ const base_url = environment.url;
 export class CustomerService {
   constructor(private http: HttpClient) {}
 
+  get id(): string {
+    return localStorage.getItem('public_id') || '';
+  }
+
+  get user(): string {
+    return localStorage.getItem('public_user') || '';
+  }
+
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return localStorage.getItem('public_token') || '';
   }
 
   get headers() {
@@ -42,7 +50,7 @@ export class CustomerService {
     return true;
   }
 
-  login_customer(data: any): Observable<any> {
+  login_customer_invited(data: any): Observable<any> {
     const url = `${base_url}/login_customer/`;
     return this.http.post(url, data, this.headers);
   }
@@ -57,8 +65,13 @@ export class CustomerService {
     return this.http.put(url, data, this.headers);
   }
 
-  get_config_public(): Observable<any> {
+  list_categories_public(): Observable<any> {
     const url = `${base_url}/get_config_public`;
+    return this.http.get(url, this.headers);
+  }
+
+  list_products_public(filter: any): Observable<any> {
+    const url = `${base_url}/list_products_public/${filter}`;
     return this.http.get(url, this.headers);
   }
 }
