@@ -56,4 +56,9 @@ export class CustomerService {
     const url = `${base_url}/update_customer_invited/${id}`;
     return this.http.put(url, data, this.headers);
   }
+
+  get_config_public(): Observable<any> {
+    const url = `${base_url}/get_config_public`;
+    return this.http.get(url, this.headers);
+  }
 }

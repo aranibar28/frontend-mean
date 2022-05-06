@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './customer/profile/profile.component';
 import { SidebarComponent } from './customer/sidebar/sidebar.component';
+import { IndexProductComponent } from './products/index-product/index-product.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SidebarComponent } from './customer/sidebar/sidebar.component';
     PagesComponent,
     ProfileComponent,
     SidebarComponent,
+    IndexProductComponent,
   ],
   imports: [
     CommonModule,

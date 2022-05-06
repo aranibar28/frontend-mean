@@ -11,6 +11,7 @@ export class NavComponent implements OnInit {
   public id: any;
   public user: any = undefined;
   public user_lc: any = undefined;
+  public categories: any;
 
   constructor(
     private customerService: CustomerService,
@@ -36,7 +37,15 @@ export class NavComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.list_categories();
+  }
+
+  list_categories() {
+    this.customerService
+      .get_config_public()
+      .subscribe(({ data: { categories } }) => (this.categories = categories));
+  }
 
   logout() {
     Swal.fire({
