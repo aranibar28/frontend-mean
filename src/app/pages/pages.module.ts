@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { ComponentsModule } from '../components/components.module';
@@ -21,7 +22,7 @@ import { ImagePipe } from '../pipes/image.pipe';
     ProfileComponent,
     SidebarComponent,
     IndexProductComponent,
-    ImagePipe
+    ImagePipe,
   ],
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { ImagePipe } from '../pipes/image.pipe';
     ReactiveFormsModule,
     PagesRoutingModule,
     ComponentsModule,
-  ]
+    NgxPaginationModule,
+  ],
 })
-export class PagesModule { }
+export class PagesModule {}

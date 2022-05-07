@@ -86,7 +86,7 @@
               <a routerLink="/productos" routerLinkActive="active" class="nav-link dropdown-toggle" data-toggle="dropdown">Tienda</a>
               <ul class="dropdown-menu">
                 <li *ngFor="let item of categories">
-                  <a class="dropdown-item"><i [class]="item.icon + ' mr-2'"></i>{{ item.name }}</a>
+                  <a routerLink="/productos/categoria/{{item.name | lowercase}}" class="dropdown-item"><i [class]="item.icon + ' mr-2'"></i>{{ item.name }}</a>
                 </li>
               </ul>
             </li>

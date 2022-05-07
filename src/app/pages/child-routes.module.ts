@@ -14,6 +14,7 @@ const childRoutes: Routes = [
   { path: 'cuenta/perfil', component: ProfileComponent, canActivate: [AuthGuard] },
 
   { path: 'productos', component: IndexProductComponent },
+  { path: 'productos/categoria/:category', component: IndexProductComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

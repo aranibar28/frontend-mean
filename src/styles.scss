@@ -3,3 +3,10 @@
 a {
   cursor: pointer;
 }
+
+.ngx-pagination {
+  margin-bottom: 0 !important;
+  .current {
+    background-color: #17696a !important;
+  }
+}
