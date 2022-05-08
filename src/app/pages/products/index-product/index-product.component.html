@@ -209,7 +209,7 @@
                 <div *ngFor="let item of products | paginate: { itemsPerPage: size, currentPage: p }" class="col pb-sm-2 mb-grid-gutter">
                   <div class="card card-product mx-auto">
                     <div class="card-product-img">
-                      <a href="shop-single.html" class="card-img-top">
+                      <a routerLink="/productos/{{ item.slug }}" class="card-img-top">
                    <!-- <img src="https://createx.createx.studio/assets/img/ecommerce/shop/01.jpg" alt="Product image"> -->
                         <img [src]="item.banner | image" [alt]="item.title">
                       </a>
@@ -223,12 +223,12 @@
                         </div>
                       </div>
                       <div class="card-product-widgets-bottom">
-                        <a href="#" class="btn-wishlist ml-auto" data-toggle="tooltip" data-placement="left" title="Add to wishlist"></a>
+                        <a class="btn-wishlist ml-auto" data-toggle="tooltip" data-placement="left" title="Add to wishlist"></a>
                       </div>
                     </div>
                     <div class="card-body pb-2">
                       <h3 class="card-product-title text-truncate mb-2">
-                        <a href="shop-single.html" class="nav-link">{{ item.title }}</a>
+                        <a routerLink="/productos/{{ item.slug }}" class="nav-link">{{ item.title }}</a>
                       </h3>
                       <div class="d-flex align-items-center">
                         <span class="h5 d-inline-block mb-0">S/. {{ item.price }}</span>

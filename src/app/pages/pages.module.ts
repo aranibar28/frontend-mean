@@ -13,6 +13,8 @@ import { ProfileComponent } from './customer/profile/profile.component';
 import { SidebarComponent } from './customer/sidebar/sidebar.component';
 import { IndexProductComponent } from './products/index-product/index-product.component';
 import { ImagePipe } from '../pipes/image.pipe';
+import { DetailProductComponent } from './products/detail-product/detail-product.component';
+import { NoSanitizePipe } from '../pipes/nosanitizer.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ImagePipe } from '../pipes/image.pipe';
     SidebarComponent,
     IndexProductComponent,
     ImagePipe,
+    NoSanitizePipe,
+    DetailProductComponent,
   ],
   imports: [
     CommonModule,
