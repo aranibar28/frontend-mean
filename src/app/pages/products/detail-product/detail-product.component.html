@@ -27,13 +27,13 @@
               <div class="cs-carousel-inner" data-carousel-options=''>
 
                 <!-- Product gallery item -->
-                <a class="cs-gallery-item" [href]="product.banner | image" data-sub-html='<h6 class="text-light">Gallery image caption #1</h6>'>
+                <a class="cs-gallery-item" [href]="product.banner | image" data-sub-html='<h6 class="text-light">Imagen 1</h6>'>
                   <img class="rounded" [src]="product.banner | image" alt="Carousel image">
-                  <span class="cs-gallery-caption">Imagén #1</span>
+                  <span class="cs-gallery-caption">Imagen 1</span>
                 </a>
-                <a *ngFor="let item of product.galery, let i = index" class="cs-gallery-item" [href]="item.image | image" data-sub-html='<h6 class="text-light">Gallery image caption #1</h6>'>
+                <a *ngFor="let item of product.galery, let i = index" class="cs-gallery-item" [href]="item.image | image" [attr.data-sub-html]="['<h6 class=\'text-light\'>Imagen '+(i + 2)+'</h6>']">
                   <img class="rounded" [src]="item.image | image" alt="Carousel image">
-                  <span class="cs-gallery-caption">Imagén #{{ i + 2 }}</span>
+                  <span class="cs-gallery-caption">Imagen {{ i + 2 }}</span>
                 </a>
 
               </div>
@@ -74,7 +74,7 @@
 
             <!-- Ordering form -->
             <form class="row">
-     <!--          <div class="col-12">
+        <!-- <div class="col-12">
                 <div class="form-group">
                   <label for="pink">Color</label>
                   <div class="d-flex align-items-middle">
@@ -103,10 +103,9 @@
               <div class="col-sm-8 order-sm-1 order-2">
                 <div class="form-group">
                   <label for="size">{{ product.name_variety }}</label>
-                  <select class="form-control custom-select" id="size">
+                  <select [(ngModel)]="cart_data.variety" name="variety" class="form-control custom-select" id="size">
                     <option value="" selected disabled>Seleccionar</option>
                     <option value="{{ item.name }}" *ngFor="let item of product.item_variety">{{ item.name }}</option>
-
                   </select>
                 </div>
               </div>
@@ -118,18 +117,23 @@
               </div>
               <div class="col-lg-2 col-4 order-lg-3 order-3">
                 <div class="form-group">
-                  <select class="form-control custom-select" id="select-input">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>5</option>
-                    <option>10</option>
+                  <select [(ngModel)]="cart_data.quantity" name="quantity" class="form-control custom-select" id="select-input">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="1000">1000</option>
                   </select>
                 </div>
               </div>
               <div class="col-lg-6 order-lg-4 order-4">
-                <button class="btn btn-block btn-primary">
+                <button *ngIf="!load_btn" (click)="add_product()" class="btn btn-block btn-primary">
                   <i class="cxi-cart mr-2"></i>
                   Agregar al carrito
+                </button>
+                <button *ngIf="load_btn" type="button" class="btn btn-primary" disabled>
+                  <span class="spinner-grow spinner-grow-sm mr-2" role="status" aria-hidden="true"></span>
+                  Cargando...
                 </button>
               </div>
               <div class="col-lg-4 col-8 order-lg-5 order-2">
@@ -148,7 +152,7 @@
               <div class="card border-bottom">
                 <div class="card-header" id="delivery-card">
                   <h6 class="accordion-heading">
-                    <a class="collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="delivery">Delivery
+                    <a href="#delivery" class="collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="delivery">Delivery
                       <span class="accordion-indicator"></span>
                     </a>
                   </h6>
@@ -219,11 +223,11 @@
               <a class="social-btn sb-solid align-middle mr-2" data-toggle="tooltip" title="Facebook">
                 <i class="cxi-facebook"></i>
               </a>
-              <a class="social-btn sb-solid align-middle mr-2" data-toggle="tooltip" title="Twitter">
-                <i class="cxi-twitter"></i>
+              <a class="social-btn sb-solid align-middle mr-2" data-toggle="tooltip" title="Instagram">
+                <i class="cxi-instagram"></i>
               </a>
-              <a class="social-btn sb-solid align-middle" data-toggle="tooltip" title="Pinterest">
-                <i class="cxi-pinterest"></i>
+              <a class="social-btn sb-solid align-middle" data-toggle="tooltip" title="Whatsapp">
+                <i class="cxi-whatsapp"></i>
               </a>
             </div>
 

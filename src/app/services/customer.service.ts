@@ -74,4 +74,9 @@ export class CustomerService {
     const url = `${base_url}/list_products_public/${filter}`;
     return this.http.get(url, this.headers);
   }
+
+  add_cart_customer(data: any): Observable<any> {
+    const url = `${base_url}/add_cart_customer`;
+    return this.http.post(url, data, this.headers);
+  }
 }

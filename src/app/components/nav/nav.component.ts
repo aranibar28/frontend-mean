@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-nav',
@@ -12,6 +13,7 @@ export class NavComponent implements OnInit {
   public user: any = undefined;
   public user_lc: any = undefined;
   public categories: any;
+  public op_cart = false;
 
   constructor(
     private customerService: CustomerService,
@@ -61,5 +63,15 @@ export class NavComponent implements OnInit {
         window.location.reload();
       }
     });
+  }
+
+  show_modal_cart() {
+    if (!this.op_cart) {
+      this.op_cart = true;
+      $('#cart').addClass('show');
+    } else {
+      this.op_cart = false;
+      $('#cart').removeClass('show');
+    }
   }
 }

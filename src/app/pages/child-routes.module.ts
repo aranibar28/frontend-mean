@@ -8,11 +8,13 @@ import { ProfileComponent } from './customer/profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { IndexProductComponent } from './products/index-product/index-product.component';
 import { DetailProductComponent } from './products/detail-product/detail-product.component';
+import { CartComponent } from './cart/cart.component';
 
 const childRoutes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cuenta/perfil', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'carrito', component: CartComponent, canActivate: [AuthGuard] },
 
   { path: 'productos', component: IndexProductComponent },
   { path: 'productos/:slug', component: DetailProductComponent },

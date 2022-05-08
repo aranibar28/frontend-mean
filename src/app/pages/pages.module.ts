@@ -15,6 +15,7 @@ import { IndexProductComponent } from './products/index-product/index-product.co
 import { ImagePipe } from '../pipes/image.pipe';
 import { DetailProductComponent } from './products/detail-product/detail-product.component';
 import { NoSanitizePipe } from '../pipes/nosanitizer.pipe';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NoSanitizePipe } from '../pipes/nosanitizer.pipe';
     ImagePipe,
     NoSanitizePipe,
     DetailProductComponent,
+    CartComponent,
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PublicService } from 'src/app/services/public.service';
 declare var noUiSlider: any;
 declare var $: any;
 
@@ -13,18 +14,21 @@ export class IndexProductComponent implements OnInit {
   public products: Array<any> = [];
   public products_count: Array<any> = [];
   public params_category: any;
+  public cart_data: any = { variety: '', quantity: 1 };
 
   public filter_category = '';
   public filter_product = '';
   public filter_cat_pro = 'all';
 
   public load_data = true;
+  public load_btn = false;
   public sort_by = 'default';
   public size: number = 9;
   public p: number = 1;
 
   constructor(
     private customerService: CustomerService,
+    private publicService: PublicService,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -131,6 +135,29 @@ export class IndexProductComponent implements OnInit {
         },
       });
     }
+  }
+
+  //TO DO FIX LENGTH VARIETY IF NOT EXIST
+  add_product(product: any) {
+    let data = {
+      product: product._id,
+      customer: localStorage.getItem('public_id'),
+      quantity: 1,
+      variety: product.item_variety[0].name,
+    };
+    this.load_btn = true;
+    this.customerService.add_cart_customer(data).subscribe({
+      next: (res) => {
+        if (res.data == undefined) {
+          this.load_btn = false;
+          this.publicService.danger('El producto ya existe en el carrito.');
+        } else {
+          console.log(res);
+          this.load_btn = false;
+          this.publicService.success('Se agegró el producto al carrito.');
+        }
+      },
+    });
   }
 
   order_by() {
