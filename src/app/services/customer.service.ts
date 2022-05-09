@@ -79,4 +79,14 @@ export class CustomerService {
     const url = `${base_url}/add_cart_customer`;
     return this.http.post(url, data, this.headers);
   }
+
+  get_cart_customer(id: any): Observable<any> {
+    const url = `${base_url}/get_cart_customer/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
+  delete_item_cart(id: any): Observable<any> {
+    const url = `${base_url}/delete_item_cart/${id}`;
+    return this.http.delete(url, this.headers);
+  }
 }

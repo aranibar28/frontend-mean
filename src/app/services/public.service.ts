@@ -11,6 +11,10 @@ declare var iziToast: any;
 export class PublicService {
   constructor(private http: HttpClient) {}
 
+  get id(): string {
+    return localStorage.getItem('public_id') || '';
+  }
+
   get token(): string {
     return localStorage.getItem('public_token') || '';
   }

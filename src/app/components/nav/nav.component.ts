@@ -15,6 +15,9 @@ export class NavComponent implements OnInit {
   public categories: any;
   public op_cart = false;
 
+  public cart_items: Array<any> = [];
+  public subtotal = 0;
+
   constructor(
     private customerService: CustomerService,
     private router: Router
@@ -27,6 +30,13 @@ export class NavComponent implements OnInit {
           localStorage.setItem('public_user', JSON.stringify(this.user));
           if (localStorage.getItem('public_user')) {
             this.user_lc = JSON.parse(localStorage.getItem('public_user')!);
+            this.customerService.get_cart_customer(this.user_lc._id).subscribe({
+              next: (res) => {
+                this.cart_items = res.data;
+                console.log(this.cart_items);
+                this.calculate_cart();
+              },
+            });
           } else {
             this.user_lc = undefined;
           }
@@ -73,5 +83,19 @@ export class NavComponent implements OnInit {
       this.op_cart = false;
       $('#cart').removeClass('show');
     }
+  }
+
+  calculate_cart() {
+    this.cart_items.forEach((element) => {
+      this.subtotal = this.subtotal + parseInt(element.product.price);
+    });
+  }
+
+  delete_item(id: any) {
+    this.customerService.delete_item_cart(id).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+    });
   }
 }

@@ -12,10 +12,10 @@ import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './customer/profile/profile.component';
 import { SidebarComponent } from './customer/sidebar/sidebar.component';
 import { IndexProductComponent } from './products/index-product/index-product.component';
-import { ImagePipe } from '../pipes/image.pipe';
 import { DetailProductComponent } from './products/detail-product/detail-product.component';
 import { NoSanitizePipe } from '../pipes/nosanitizer.pipe';
 import { CartComponent } from './cart/cart.component';
+import { ImagePipe } from '../pipes/image.pipe';
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { CartComponent } from './cart/cart.component';
     ProfileComponent,
     SidebarComponent,
     IndexProductComponent,
-    ImagePipe,
     NoSanitizePipe,
     DetailProductComponent,
     CartComponent,
+    ImagePipe,
   ],
   imports: [
     CommonModule,

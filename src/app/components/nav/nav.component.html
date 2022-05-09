@@ -41,7 +41,7 @@
                   <a class="dropdown-item">
                     <i class="cxi-comment mr-2"></i>
                     Mensajes
-                    <span class="badge badge-pill badge-success ml-2">5</span>
+                    <span class="badge badge-pill badge-success ml-2">{{ cart_items.length }}</span>
                   </a>
                   <a (click)="logout()" class="dropdown-item">
                     <i class="cxi-logout mr-2"></i>
@@ -186,7 +186,7 @@
 
   <!-- Header -->
   <div class="cs-offcanvas-cap align-items-center border-bottom">
-    <h2 class="h5 mb-0">Your cart (4)</h2>
+    <h2 class="h5 mb-0">Tu carrito ({{ cart_items.length }})</h2>
     <button (click)="show_modal_cart()" class="close mr-n1" type="button" data-dismiss="offcanvas" aria-label="Close" >
       <span class="h3 font-weight-normal mb-0" aria-hidden="true" >×</span>
     </button>
@@ -195,116 +195,32 @@
   <!-- Body -->
   <div class="cs-offcanvas-body">
     <!-- Item -->
-    <div class="media p-4 border-bottom mx-n4">
-      <a href="shop-single.html" style="min-width: 80px;">
-        <img src="../../assets/img/ecommerce/cart/01.png" width="80" alt="Product thumb">
+    <div *ngFor="let item of cart_items" class="media p-4 border-bottom mx-n4">
+      <a routerLink="/productos/{{ item.product.slug }}" target="_blank" style="min-width: 80px;">
+        <img [src]="item.product.banner | imagex" width="80" alt="Product thumb">
       </a>
       <div class="media-body pl-3">
         <div class="d-flex justify-content-between">
           <div class="pr-2">
             <h3 class="font-size-sm mb-3">
-              <a href="shop-single.html" class="nav-link font-weight-bold">Basic hooded sweatshirt in pink</a>
+              <a routerLink="/productos/{{ item.product.slug }}" target="_blank" class="nav-link font-weight-bold">{{ item.product.title }}</a>
             </h3>
             <ul class="list-unstyled font-size-xs mt-n2 mb-2">
-              <li class="mb-0"><span class="text-muted">Color:</span> Pink</li>
-              <li class="mb-0"><span class="text-muted">Size:</span> S</li>
+              <li class="mb-0"><span class="text-muted">{{ item.product.name_variety }}: </span>{{ item.variety }}</li>
             </ul>
             <div class="d-flex align-items-center">
-              <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" value="1">
-              <div class="text-nowrap"><strong class="text-danger">$15.00</strong> <s class="font-size-xs text-muted">$31.00</s></div>
+              <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" [value]="item.quantity">
+              <div class="text-nowrap"><strong class="text-danger">{{ item.product.price | currency: "S/. " }}</strong></div>
             </div>
             <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">
-              Move to
+              Mover a
               <i class="cxi-heart ml-1"></i>
             </button>
           </div>
           <div class="nav-muted mr-n2">
-            <a href="#" class="nav-link px-2 mt-n2" data-toggle="tooltip" title="" data-original-title="Remove"><i class="cxi-delete"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Item -->
-    <div class="media p-4 border-bottom mx-n4">
-      <a href="shop-single.html" style="min-width: 80px;">
-        <img src="../../assets/img/ecommerce/cart/02.png" width="80" alt="Product thumb">
-      </a>
-      <div class="media-body pl-3">
-        <div class="d-flex justify-content-between">
-          <div class="pr-2">
-            <h3 class="font-size-sm mb-3">
-              <a href="shop-single.html" class="nav-link font-weight-bold">Black and white sport cap</a>
-            </h3>
-            <div class="d-flex align-items-center">
-              <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" value="1">
-              <div class="text-nowrap"><strong>$18.15</strong></div>
-            </div>
-            <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">
-              Move to
-              <i class="cxi-heart ml-1"></i>
-            </button>
-          </div>
-          <div class="nav-muted mr-n2">
-            <a href="#" class="nav-link px-2 mt-n2" data-toggle="tooltip" title="" data-original-title="Remove"><i class="cxi-delete"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Item -->
-    <div class="media p-4 border-bottom mx-n4">
-      <a href="shop-single.html" style="min-width: 80px;">
-        <img src="../../assets/img/ecommerce/cart/03.png" width="80" alt="Product thumb">
-      </a>
-      <div class="media-body pl-3">
-        <div class="d-flex justify-content-between">
-          <div class="pr-2">
-            <h3 class="font-size-sm mb-3">
-              <a href="shop-single.html" class="nav-link font-weight-bold">Mid-rise slim cropped fit jeans</a>
-            </h3>
-            <ul class="list-unstyled font-size-xs mt-n2 mb-2">
-              <li class="mb-0"><span class="text-muted">Size:</span> M</li>
-            </ul>
-            <div class="d-flex align-items-center">
-              <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" value="1">
-              <div class="text-nowrap"><strong>$76.00</strong></div>
-            </div>
-            <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">
-              Move to
-              <i class="cxi-heart ml-1"></i>
-            </button>
-          </div>
-          <div class="nav-muted mr-n2">
-            <a href="#" class="nav-link px-2 mt-n2" data-toggle="tooltip" title="" data-original-title="Remove"><i class="cxi-delete"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Item -->
-    <div class="media p-4 mx-n4">
-      <a href="shop-single.html" style="min-width: 80px;">
-        <img src="../../assets/img/ecommerce/cart/04.png" width="80" alt="Product thumb">
-      </a>
-      <div class="media-body pl-3">
-        <div class="d-flex justify-content-between">
-          <div class="pr-2">
-            <h3 class="font-size-sm mb-3">
-              <a href="shop-single.html" class="nav-link font-weight-bold">Men fashion gray shoes</a>
-            </h3>
-            <ul class="list-unstyled font-size-xs mt-n2 mb-2">
-              <li class="mb-0"><span class="text-muted">Color:</span> Gray</li>
-              <li class="mb-0"><span class="text-muted">Size:</span> 10.5</li>
-            </ul>
-            <div class="d-flex align-items-center">
-              <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" value="1">
-              <div class="text-nowrap"><strong>$84.00</strong></div>
-            </div>
-            <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">
-              Move to
-              <i class="cxi-heart ml-1"></i>
-            </button>
-          </div>
-          <div class="nav-muted mr-n2">
-            <a href="#" class="nav-link px-2 mt-n2" data-toggle="tooltip" title="" data-original-title="Remove"><i class="cxi-delete"></i></a>
+            <a (click)="delete_item(item._id)"class="nav-link px-2 mt-n2" title="Eliminar">
+              <i class="cxi-delete"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -315,9 +231,9 @@
   <div class="cs-offcanvas-cap flex-column border-top">
     <div class="d-flex align-items-center justify-content-between mb-3 pb-1">
       <span class="text-muted mr-2">Subtotal:</span>
-      <span class="h5 mb-0">$198.65</span>
+      <span class="h5 mb-0">S/. {{ subtotal }}</span>
     </div>
-    <a routerLink="/carrito" class="btn btn-primary btn-lg btn-block">
+    <a (click)="show_modal_cart()" routerLink="/carrito" class="btn btn-primary btn-lg btn-block">
       <i class="cxi-credit-card font-size-lg mt-n1 mr-1"></i>
       Checkout
     </a>

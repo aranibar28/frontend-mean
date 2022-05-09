@@ -4,9 +4,10 @@ import { RouterModule } from '@angular/router';
 
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
+import { ImagePipex } from '../pipes/imagex.pipe';
 
 @NgModule({
-  declarations: [NavComponent, FooterComponent],
+  declarations: [NavComponent, FooterComponent, ImagePipex],
   imports: [CommonModule, RouterModule],
   exports: [NavComponent, FooterComponent],
 })

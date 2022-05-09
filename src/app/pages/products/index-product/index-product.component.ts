@@ -143,7 +143,7 @@ export class IndexProductComponent implements OnInit {
       product: product._id,
       customer: localStorage.getItem('public_id'),
       quantity: 1,
-      variety: product.item_variety[0].name,
+      variety: product.item_variety[0].name || "",
     };
     this.load_btn = true;
     this.customerService.add_cart_customer(data).subscribe({
