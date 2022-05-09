@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PublicService } from 'src/app/services/public.service';
-declare var noUiSlider: any;
+import { environment } from 'src/environments/environment';
+import { io } from 'socket.io-client';
+var server = environment.server;
 declare var $: any;
 
 @Component({
@@ -20,6 +22,7 @@ export class IndexProductComponent implements OnInit {
   public filter_product = '';
   public filter_cat_pro = 'all';
 
+  public socket = io(server);
   public load_data = true;
   public load_btn = false;
   public sort_by = 'default';
@@ -35,7 +38,7 @@ export class IndexProductComponent implements OnInit {
   ngOnInit(): void {
     this.list_products_by_params();
     this.list_categories();
-    this.slider();
+    this.publicService.slider();
   }
 
   list_products_by_params() {
@@ -143,7 +146,7 @@ export class IndexProductComponent implements OnInit {
       product: product._id,
       customer: localStorage.getItem('public_id'),
       quantity: 1,
-      variety: product.item_variety[0].name || "",
+      variety: product.item_variety[0].name || '',
     };
     this.load_btn = true;
     this.customerService.add_cart_customer(data).subscribe({
@@ -152,10 +155,10 @@ export class IndexProductComponent implements OnInit {
           this.load_btn = false;
           this.publicService.danger('El producto ya existe en el carrito.');
         } else {
-          console.log(res);
           this.load_btn = false;
           this.publicService.success('Se agegró el producto al carrito.');
         }
+        this.socket.emit('insert-item-cart', { data: true });
       },
     });
   }
@@ -219,27 +222,5 @@ export class IndexProductComponent implements OnInit {
         return 0;
       });
     }
-  }
-
-  slider() {
-    var slider: any = document.getElementById('slider');
-    noUiSlider.create(slider, {
-      start: [0, 3000],
-      connect: true,
-      range: {
-        min: 0,
-        max: 3000,
-      },
-      tooltips: [true, true],
-      pips: {
-        mode: 'count',
-        values: 5,
-      },
-    });
-    slider.noUiSlider.on('update', function (values: any) {
-      $('.cs-range-slider-value-min').val(values[0]);
-      $('.cs-range-slider-value-max').val(values[1]);
-    });
-    $('.noUi-tooltip').css('font-size', '11px');
   }
 }

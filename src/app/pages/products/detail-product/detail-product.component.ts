@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PublicService } from 'src/app/services/public.service';
+import { environment } from 'src/environments/environment';
+import { io } from 'socket.io-client';
+var server = environment.server;
 declare var lightGallery: any;
 declare var tns: any;
 
@@ -10,6 +13,7 @@ declare var tns: any;
   templateUrl: './detail-product.component.html',
 })
 export class DetailProductComponent implements OnInit {
+  public socket = io(server);
   public products_recomended: Array<any> = [];
   public product: any = {};
   public slug: any;
@@ -66,9 +70,9 @@ export class DetailProductComponent implements OnInit {
               this.load_btn = false;
               this.publicService.danger('El producto ya existe en el carrito.');
             } else {
-              console.log(res);
               this.load_btn = false;
               this.publicService.success('Se agegró el producto al carrito.');
+              this.socket.emit('insert-item-cart', { data: true });
             }
           },
         });

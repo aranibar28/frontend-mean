@@ -18,7 +18,7 @@
         <div class="d-flex align-items-center order-lg-3">
           <ul class="nav nav-tools flex-nowrap">
             
-              <ng-container *ngIf="!user_lc">
+              <ng-container *ngIf="!public_user">
                 <li class="nav-item d-lg-block d-none mb-0">
                 <a routerLink="/login" class="nav-tool">
                   <i class="cxi-profile nav-tool-icon"></i>
@@ -27,11 +27,11 @@
               </li>
               </ng-container>
 
-              <ng-container *ngIf="user_lc">
+              <ng-container *ngIf="public_user">
                 <li class="nav-item d-lg-block d-none dropdown">
                 <a class="nav-tool dropdown-toggle" toggle="dropdown">
                   <i class="cxi-profile nav-tool-icon"></i>
-                  <span class="nav-tool-label">{{user_lc.first_name}}</span>
+                  <span class="nav-tool-label">{{public_user.first_name}}</span>
                 </a>
                 <div class="dropdown-menu">
                   <a routerLink="/cuenta/perfil" routerLinkActive="active" class="dropdown-item">
@@ -53,17 +53,17 @@
    
             <li class="divider-vertical mb-0 d-lg-block d-none"></li>
 
-            <li *ngIf="!user_lc" class="nav-item align-self-center mb-0">
+            <li *ngIf="!public_user" class="nav-item align-self-center mb-0">
               <a routerLink="/login" class="nav-tool pr-lg-0">
                 <i class="cxi-cart nav-tool-icon"></i>
                 <span class="badge badge-success align-middle mt-n1 ml-2 px-2 py-1 font-size-xs">0</span>
               </a>
             </li>
 
-            <li *ngIf="user_lc" class="nav-item align-self-center mb-0">
+            <li *ngIf="public_user" class="nav-item align-self-center mb-0">
               <a (click)="show_modal_cart()" class="nav-tool pr-lg-0">
                 <i class="cxi-cart nav-tool-icon"></i>
-                <span class="badge badge-success align-middle mt-n1 ml-2 px-2 py-1 font-size-xs">4</span>
+                <span class="badge badge-success align-middle mt-n1 ml-2 px-2 py-1 font-size-xs">{{ cart_items.length }}</span>
               </a>
             </li>
             

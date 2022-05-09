@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const base_url = environment.url;
+declare var noUiSlider: any;
 declare var iziToast: any;
+declare var $: any;
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,10 @@ export class PublicService {
 
   get id(): string {
     return localStorage.getItem('public_id') || '';
+  }
+
+  get user(): string {
+    return localStorage.getItem('public_user') || '';
   }
 
   get token(): string {
@@ -53,5 +59,27 @@ export class PublicService {
       position: 'topRight',
       message: msg,
     });
+  }
+
+  slider() {
+    var slider: any = document.getElementById('slider');
+    noUiSlider.create(slider, {
+      start: [0, 3000],
+      connect: true,
+      range: {
+        min: 0,
+        max: 3000,
+      },
+      tooltips: [true, true],
+      pips: {
+        mode: 'count',
+        values: 5,
+      },
+    });
+    slider.noUiSlider.on('update', function (values: any) {
+      $('.cs-range-slider-value-min').val(values[0]);
+      $('.cs-range-slider-value-max').val(values[1]);
+    });
+    $('.noUi-tooltip').css('font-size', '11px');
   }
 }

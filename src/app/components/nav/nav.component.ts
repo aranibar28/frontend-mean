@@ -1,7 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PublicService } from 'src/app/services/public.service';
+import { environment } from 'src/environments/environment';
+import { io } from 'socket.io-client';
 import Swal from 'sweetalert2';
+var server = environment.server;
 declare var $: any;
 
 @Component({
@@ -9,9 +13,10 @@ declare var $: any;
   templateUrl: './nav.component.html',
 })
 export class NavComponent implements OnInit {
+  public socket = io(server);
   public id: any;
   public user: any = undefined;
-  public user_lc: any = undefined;
+  public public_user: any = undefined;
   public categories: any;
   public op_cart = false;
 
@@ -19,26 +24,30 @@ export class NavComponent implements OnInit {
   public subtotal = 0;
 
   constructor(
+    private publicService: PublicService,
     private customerService: CustomerService,
     private router: Router
-  ) {
-    this.id = customerService.id;
+  ) {}
+
+  ngOnInit(): void {
+    this.list_categories();
+    this.list_customer_by_id();
+    this.socket.on('new-item-cart', this.get_cart_customer.bind(this)); // agregar
+    this.socket.on('update-item-cart', this.get_cart_customer.bind(this)); // eliminar
+  }
+
+  list_customer_by_id() {
+    this.id = this.customerService.id;
     if (this.id) {
       this.customerService.list_customer_by_id_invited(this.id).subscribe({
         next: (res) => {
           this.user = res.data;
           localStorage.setItem('public_user', JSON.stringify(this.user));
-          if (localStorage.getItem('public_user')) {
-            this.user_lc = JSON.parse(localStorage.getItem('public_user')!);
-            this.customerService.get_cart_customer(this.user_lc._id).subscribe({
-              next: (res) => {
-                this.cart_items = res.data;
-                console.log(this.cart_items);
-                this.calculate_cart();
-              },
-            });
+          if (this.publicService.user) {
+            this.public_user = JSON.parse(localStorage.getItem('public_user')!);
+            this.get_cart_customer();
           } else {
-            this.user_lc = undefined;
+            this.public_user = undefined;
           }
         },
         error: (err) => {
@@ -49,14 +58,45 @@ export class NavComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.list_categories();
-  }
-
   list_categories() {
     this.customerService
       .list_categories_public()
       .subscribe(({ data: { categories } }) => (this.categories = categories));
+  }
+
+  get_cart_customer() {
+    this.customerService.get_cart_customer(this.public_user._id).subscribe({
+      next: (res) => {
+        this.cart_items = res.data;
+        this.calculate_cart();
+      },
+    });
+  }
+
+  calculate_cart() {
+    this.subtotal = 0;
+    this.cart_items.forEach((element) => {
+      this.subtotal = this.subtotal + parseInt(element.product.price);
+    });
+  }
+
+  delete_item(id: any) {
+    this.customerService.delete_item_cart(id).subscribe({
+      next: (res) => {
+        this.publicService.success('Se eliminó el producto del carrito.');
+        this.socket.emit('delete-item-cart', { data: res.data });
+      },
+    });
+  }
+
+  show_modal_cart() {
+    if (!this.op_cart) {
+      this.op_cart = true;
+      $('#cart').addClass('show');
+    } else {
+      this.op_cart = false;
+      $('#cart').removeClass('show');
+    }
   }
 
   logout() {
@@ -72,30 +112,6 @@ export class NavComponent implements OnInit {
         this.router.navigateByUrl('/');
         window.location.reload();
       }
-    });
-  }
-
-  show_modal_cart() {
-    if (!this.op_cart) {
-      this.op_cart = true;
-      $('#cart').addClass('show');
-    } else {
-      this.op_cart = false;
-      $('#cart').removeClass('show');
-    }
-  }
-
-  calculate_cart() {
-    this.cart_items.forEach((element) => {
-      this.subtotal = this.subtotal + parseInt(element.product.price);
-    });
-  }
-
-  delete_item(id: any) {
-    this.customerService.delete_item_cart(id).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
     });
   }
 }
