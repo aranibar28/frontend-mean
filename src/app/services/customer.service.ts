@@ -89,4 +89,24 @@ export class CustomerService {
     const url = `${base_url}/delete_item_cart/${id}`;
     return this.http.delete(url, this.headers);
   }
+
+  register_address_customer(data: any): Observable<any> {
+    const url = `${base_url}/register_address_customer`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  list_address_customer(id: any): Observable<any> {
+    const url = `${base_url}/list_address_customer/${id}`;
+    return this.http.get(url, this.headers);
+  }
+  //change_address_customer}
+  change_address_customer(id: any, customer: any): Observable<any> {
+    const url = `${base_url}/change_address_customer/${id}`;
+    return this.http.put(url + '/' + customer, { data: true }, this.headers);
+  }
+
+  delete_address_customer(id: any): Observable<any> {
+    const url = `${base_url}/delete_address_customer/${id}`;
+    return this.http.delete(url, this.headers);
+  }
 }

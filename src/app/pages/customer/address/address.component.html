@@ -1,0 +1,156 @@
+<main class="cs-page-wrapper">
+    <nav class="bg-secondary mb-3" aria-label="breadcrumb">
+      <div class="container">
+        <ol class="breadcrumb breadcrumb-alt mb-0">
+        <li class="breadcrumb-item"><a routerLink="/"><i class="cxi-home"></i></a></li>
+        <li class="breadcrumb-item"><a routerLink="/cuenta/perfil">Mi Cuenta</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Mis Direcciones</li>
+        </ol>
+    </div>
+    </nav>
+    
+      <section class="container pt-3 pt-lg-4 pb-5 pb-lg-6">
+        <div class="row pb-2 pb-lg-0">
+    
+          <aside class="col-xl-3 col-lg-4 pb-3 mb-4 mb-lg-0">
+            <app-sidebar></app-sidebar>
+          </aside>
+          
+          <div class="col-lg-8 ml-auto">
+            
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
+              <h1 class="h2 mb-0">Mis direcciones</h1>
+            </div>
+
+            <div *ngIf="!load_data" class="row">
+              <div *ngIf="address.length >= 1" class="col-12">
+                <ng-container *ngFor="let item of address">
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-3 col-sm-4 mb-sm-0 mb-3">
+                          <p class="mb-2">
+                            {{ item.receiver }}
+                          </p>
+                          <span class="d-block font-size-sm text-muted">
+                            C.P. {{ item.zip }}
+                          </span>
+                        </div>
+                        <div class="col">
+                          <p class="mb-2">{{ item.address }}</p>
+                          <p class="mb-0">
+                            <span *ngIf="item.region">{{ item.region }}, </span>
+                            <span *ngIf="item.province">{{ item.province }}, </span>
+                            <span *ngIf="item.district">{{ item.district }} - </span>
+                            {{ item.country }}.
+                          </p>
+                        </div>
+                        <div class="col d-flex justify-content-between align-items-center">
+                          <a *ngIf="item.principal" class="badge badge-success">Dirección de envío</a>
+                          <a (click)="change_address_customer(item._id)" *ngIf="!item.principal" class="badge badge-danger">Establecer dirección</a>
+                          <a (click)="delete_address_customer(item._id)" title="Eliminar" class="nav-link p-0 m-0"><i class="cxi-delete"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div *ngIf="address.length == 0" class="col-12">
+                <h5>No se encontraron direcciones.</h5>
+              </div>
+            </div>
+
+            <div *ngIf="load_data" class="row">
+              <p>Cargando........</p>
+            </div>
+
+            <div class="accordion-alt mb-4">
+              <div class="card border-bottom">
+                <div class="card-header">
+                  <h6 class="accordion-heading">
+                    <a href="#address" class="collapsed" role="button" data-toggle="collapse" aria-expanded="false">
+                      Agregar nueva dirección<span class="accordion-indicator"></span>
+                    </a>
+                  </h6>
+                </div>
+                <div class="collapse" id="address">
+                  <div class="card-body">
+                    <form [formGroup]="myForm" (ngSubmit)="register()">
+                      <div class="row pb-3">
+                        <div class="col-sm-6 form-group">
+                          <label>Destinatario</label>
+                          <input formControlName="receiver" type="text" class="form-control form-control-lg" placeholder="Nombres copmpletos destinatario"
+                          [ngClass]="{ 'is-invalid': validate('receiver', true), 'is-valid': validate('receiver', false) }">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>DNI</label>
+                          <input formControlName="dni" type="number" class="form-control form-control-lg" placeholder="DNI"
+                          [ngClass]="{ 'is-invalid': validate('dni', true), 'is-valid': validate('dni', false) }"
+                          oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8)">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                          <label>Dirección</label>
+                          <textarea formControlName="address" cols="30" rows="3" class="form-control form-control-lg" placeholder="Dirección"
+                          [ngClass]="{ 'is-invalid': validate('address', true), 'is-valid': validate('address', false) }"></textarea>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>País</label>
+                          <select (change)="select_country()" formControlName="country" class="custom-select custom-select-lg" [ngClass]="{ 'is-invalid': validate('country', true), 'is-valid': validate('country', false) }">
+                            <option [value]="null" selected disabled>Seleccionar</option>
+                            <option value="Perú">Perú</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>Región</label>
+                          <select (change)="select_region()" formControlName="region" class="custom-select custom-select-lg" [ngClass]="{ 'is-invalid': validate('region', true), 'is-valid': validate('region', false) }">
+                            <option [value]="null" selected disabled>Seleccionar</option>
+                            <option *ngFor="let item of regions" [value]="item.id">{{ item.name }}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>Provincia</label>
+                          <select (change)="select_province()" formControlName="province" class="custom-select custom-select-lg" [ngClass]="{ 'is-invalid': validate('province', true), 'is-valid': validate('province', false) }">
+                            <option [value]="null" selected disabled>Seleccionar</option>
+                            <option *ngFor="let item of provinces" [value]="item.id">{{ item.name }}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>Distrito</label>
+                          <select formControlName="district" class="custom-select custom-select-lg" [ngClass]="{ 'is-invalid': validate('district', true), 'is-valid': validate('district', false) }">
+                            <option [value]="null" selected disabled>Seleccionar</option>
+                            <option *ngFor="let item of districts" [value]="item.id">{{ item.name }}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>Código Postal</label>
+                          <input formControlName="zip" type="number" class="form-control form-control-lg" placeholder="Código Postal" 
+                          [ngClass]="{ 'is-invalid': validate('zip', true), 'is-valid': validate('zip', false) }"
+                          oninput="if (this.value.length > 5) this.value = this.value.slice(0, 5)">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                          <label>Teléfono</label>
+                          <input formControlName="phone" type="number" class="form-control form-control-lg" placeholder="Teléfono"
+                          [ngClass]="{ 'is-invalid': validate('phone', true), 'is-valid': validate('phone', false) }"
+                          oninput="if (this.value.length > 9) this.value = this.value.slice(0, 9)">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                          <div class="custom-control custom-checkbox">
+                          <input formControlName="principal" class="custom-control-input" type="checkbox" id="ex-check-1">
+                          <label class="custom-control-label" for="ex-check-1">Activar cuenta Principal</label>
+                        </div>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary btn-lg">&nbsp;Guardar datos&nbsp;</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+    
+        </div>
+      </section>
+    
+    </main>
+    

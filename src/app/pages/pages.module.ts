@@ -16,6 +16,7 @@ import { DetailProductComponent } from './products/detail-product/detail-product
 import { NoSanitizePipe } from '../pipes/nosanitizer.pipe';
 import { CartComponent } from './cart/cart.component';
 import { ImagePipe } from '../pipes/image.pipe';
+import { AddressComponent } from './customer/address/address.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ImagePipe } from '../pipes/image.pipe';
     DetailProductComponent,
     CartComponent,
     ImagePipe,
+    AddressComponent,
   ],
   imports: [
     CommonModule,

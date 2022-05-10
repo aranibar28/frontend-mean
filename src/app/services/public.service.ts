@@ -29,6 +29,18 @@ export class PublicService {
     return { headers: { token: this.token } };
   }
 
+  get_region(): Observable<any> {
+    return this.http.get('./assets/regiones.json');
+  }
+
+  get_province(): Observable<any> {
+    return this.http.get('./assets/provincias.json');
+  }
+
+  get_district(): Observable<any> {
+    return this.http.get('./assets/distritos.json');
+  }
+
   list_product_by_slug(slug: any): Observable<any> {
     const url = `${base_url}/list_product_by_slug/${slug}`;
     return this.http.get(url, this.headers);
