@@ -32,6 +32,7 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.list_categories();
     this.list_customer_by_id();
+    this.socket.on('new-login', this.list_customer_by_id.bind(this)); // login
     this.socket.on('new-item-cart', this.get_cart_customer.bind(this)); // agregar
     this.socket.on('update-item-cart', this.get_cart_customer.bind(this)); // eliminar
   }

@@ -99,7 +99,7 @@ export class CustomerService {
     const url = `${base_url}/list_address_customer/${id}`;
     return this.http.get(url, this.headers);
   }
-  //change_address_customer}
+
   change_address_customer(id: any, customer: any): Observable<any> {
     const url = `${base_url}/change_address_customer/${id}`;
     return this.http.put(url + '/' + customer, { data: true }, this.headers);

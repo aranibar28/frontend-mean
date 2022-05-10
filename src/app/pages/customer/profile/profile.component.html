@@ -38,6 +38,11 @@
               [ngClass]="{ 'is-invalid': validate('email', true), 'is-valid': validate('email', false) }">
             </div>
             <div class="col-sm-6 form-group">
+              <label>Password</label>
+              <input id="input_password" type="password" class="form-control form-control-lg" placeholder="Nuevo Password"
+              [ngClass]="{ 'is-invalid': validate('dni', true), 'is-valid': validate('dni', false) }">
+            </div>
+            <div class="col-sm-6 form-group" style="display: none;">
               <label>Contraseña</label>
               <input formControlName="password" type="password" class="form-control form-control-lg" placeholder="Nueva Contraseña" autocomplete="new-password"
               [ngClass]="{ 'is-invalid': validate('password', true), 'is-valid': validate('password', false) }">

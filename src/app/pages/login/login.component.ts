@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
+import { io } from 'socket.io-client';
+var server = environment.server;
 
 @Component({
   selector: 'app-login',
@@ -12,6 +15,7 @@ export class LoginComponent implements OnInit {
   public customer: any = {};
   public token: any;
   public name: any;
+  public socket = io(server);
 
   constructor(
     private customerService: CustomerService,
@@ -21,9 +25,6 @@ export class LoginComponent implements OnInit {
     if (this.token) {
       this.router.navigateByUrl('/');
     }
-    this.router.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
-    };
   }
 
   ngOnInit(): void {}
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
 
       this.customerService.login_customer_invited(data).subscribe({
         next: (res) => {
+          this.socket.emit('login', { data: res.data });
           this.customer = res.data;
           localStorage.setItem('public_token', res.token);
           localStorage.setItem('public_id', res.data._id);

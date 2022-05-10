@@ -6,12 +6,11 @@ import { CustomerService } from 'src/app/services/customer.service';
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent implements OnInit {
-  public id: any;
+  public id = this.customerService.id;
   public user: any = undefined;
   public user_lc: any = undefined;
 
   constructor(private customerService: CustomerService) {
-    this.id = customerService.id;
     if (this.id) {
       this.customerService.list_customer_by_id_invited(this.id).subscribe({
         next: (res) => {

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-const base_url = environment.url;
+
 declare var noUiSlider: any;
 declare var iziToast: any;
+declare var lightGallery: any;
+declare var tns: any;
 declare var $: any;
 
 @Injectable({
@@ -39,16 +40,6 @@ export class PublicService {
 
   get_district(): Observable<any> {
     return this.http.get('./assets/distritos.json');
-  }
-
-  list_product_by_slug(slug: any): Observable<any> {
-    const url = `${base_url}/list_product_by_slug/${slug}`;
-    return this.http.get(url, this.headers);
-  }
-
-  list_product_recomended(category: any): Observable<any> {
-    const url = `${base_url}/list_product_recomended/${category}`;
-    return this.http.get(url, this.headers);
   }
 
   success(msg: string) {
@@ -93,5 +84,59 @@ export class PublicService {
       $('.cs-range-slider-value-max').val(values[1]);
     });
     $('.noUi-tooltip').css('font-size', '11px');
+  }
+
+  init_assets() {
+    tns({
+      container: '.cs-carousel-inner',
+      controlsText: [
+        '<i class="cxi-arrow-left"></i>',
+        '<i class="cxi-arrow-right"></i>',
+      ],
+      navPosition: 'top',
+      controlsPosition: 'top',
+      mouseDrag: !0,
+      speed: 600,
+      autoplayHoverPause: !0,
+      autoplayButtonOutput: !1,
+      navContainer: '#cs-thumbnails',
+      navAsThumbnails: true,
+      gutter: 15,
+    });
+
+    var e = document.querySelectorAll('.cs-gallery');
+    if (e.length) {
+      for (var t = 0; t < e.length; t++) {
+        lightGallery(e[t], {
+          selector: '.cs-gallery-item',
+          download: !1,
+          videojs: !0,
+          youtubePlayerParams: { modestbranding: 1, showinfo: 0, rel: 0 },
+          vimeoPlayerParams: { byline: 0, portrait: 0 },
+        });
+      }
+    }
+
+    tns({
+      container: '.cs-carousel-inner-two',
+      controlsText: [
+        '<i class="cxi-arrow-left"></i>',
+        '<i class="cxi-arrow-right"></i>',
+      ],
+      navPosition: 'top',
+      controlsPosition: 'top',
+      mouseDrag: !0,
+      speed: 600,
+      autoplayHoverPause: !0,
+      autoplayButtonOutput: !1,
+      nav: false,
+      controlsContainer: '#custom-controls-related',
+      responsive: {
+        0: { items: 1, gutter: 20 },
+        480: { items: 2, gutter: 24 },
+        700: { items: 3, gutter: 24 },
+        1100: { items: 4, gutter: 30 },
+      },
+    });
   }
 }

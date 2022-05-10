@@ -84,13 +84,13 @@
                         </div>
                         <div class="col-sm-6 form-group">
                           <label>DNI</label>
-                          <input formControlName="dni" type="number" class="form-control form-control-lg" placeholder="DNI"
+                          <input formControlName="dni" type="number" class="form-control form-control-lg" placeholder="Documento de Identidad"
                           [ngClass]="{ 'is-invalid': validate('dni', true), 'is-valid': validate('dni', false) }"
                           oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8)">
                         </div>
                         <div class="col-sm-12 form-group">
                           <label>Dirección</label>
-                          <textarea formControlName="address" cols="30" rows="3" class="form-control form-control-lg" placeholder="Dirección"
+                          <textarea formControlName="address" cols="30" rows="3" class="form-control form-control-lg" placeholder="Ejemplo: Av. Los Alisos #1040"
                           [ngClass]="{ 'is-invalid': validate('address', true), 'is-valid': validate('address', false) }"></textarea>
                         </div>
                         <div class="col-sm-6 form-group">
@@ -136,7 +136,7 @@
                         <div class="col-sm-12 form-group">
                           <div class="custom-control custom-checkbox">
                           <input formControlName="principal" class="custom-control-input" type="checkbox" id="ex-check-1">
-                          <label class="custom-control-label" for="ex-check-1">Activar cuenta Principal</label>
+                          <label class="custom-control-label" for="ex-check-1">Establecer dirección Principal</label>
                         </div>
                         </div>
                       </div>

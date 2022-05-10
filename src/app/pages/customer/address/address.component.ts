@@ -14,6 +14,7 @@ export class AddressComponent implements OnInit {
   public districts: Array<any> = [];
   public address: Array<any> = [];
   public load_data: boolean = true;
+  public id = this.publicService.id; // <-- id cliente
 
   public regions_arr: Array<any> = [];
   public provinces_arr: Array<any> = [];
@@ -31,7 +32,7 @@ export class AddressComponent implements OnInit {
   }
 
   myForm: FormGroup = this.fb.group({
-    customer: [this.publicService.id],
+    customer: [this.id],
     receiver: [, [Validators.required, Validators.minLength(3)]],
     dni: [, [Validators.required, Validators.pattern('[0-9]{8}')]],
     address: [, [Validators.required, Validators.minLength(3)]],
@@ -112,25 +113,21 @@ export class AddressComponent implements OnInit {
   }
 
   list_address() {
-    this.customerService
-      .list_address_customer(this.publicService.id)
-      .subscribe({
-        next: (res) => {
-          this.address = res.data;
-          this.load_data = false;
-        },
-      });
+    this.customerService.list_address_customer(this.id).subscribe({
+      next: (res) => {
+        this.address = res.data;
+        this.load_data = false;
+      },
+    });
   }
 
   change_address_customer(id: any) {
-    this.customerService
-      .change_address_customer(id, this.publicService.id)
-      .subscribe({
-        next: () => {
-          this.list_address();
-          this.publicService.success('Se actualizó la dirección principal.');
-        },
-      });
+    this.customerService.change_address_customer(id, this.id).subscribe({
+      next: () => {
+        this.list_address();
+        this.publicService.success('Se actualizó la dirección principal.');
+      },
+    });
   }
 
   delete_address_customer(id: any) {
