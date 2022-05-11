@@ -101,8 +101,8 @@ export class CustomerService {
   }
 
   change_address_customer(id: any, customer: any): Observable<any> {
-    const url = `${base_url}/change_address_customer/${id}`;
-    return this.http.put(url + '/' + customer, { data: true }, this.headers);
+    const url = `${base_url}/change_address_customer/${id}/${customer}`;
+    return this.http.put(url, { data: true }, this.headers);
   }
 
   delete_address_customer(id: any): Observable<any> {
@@ -113,5 +113,10 @@ export class CustomerService {
   principal_address_customer(id: any): Observable<any> {
     const url = `${base_url}/principal_address_customer/${id}`;
     return this.http.get(url, this.headers);
+  }
+
+  register_sale_customer(data: any): Observable<any> {
+    const url = `${base_url}/register_sale_customer`;
+    return this.http.post(url, data, this.headers);
   }
 }

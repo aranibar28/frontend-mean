@@ -24,8 +24,8 @@
 
             <!-- Order review -->
             <h2 class="h4 mb-4">1. Detalles del pedido</h2>
-            <div class="bg-secondary rounded mb-5">
-              <!-- Item -->
+
+            <div *ngIf="cart_items.length >= 1" class="bg-secondary rounded mb-5">
               <div *ngFor="let item of cart_items" class="media px-2 px-sm-4 py-4 border-bottom">
                 <a routerLink="/productos/{{ item.product.slug }}" style="min-width: 80px;">
                   <img [src]="item.product.banner | image" width="80" alt="Product thumb">
@@ -59,16 +59,33 @@
               </div>
             </div>
 
+            <div *ngIf="cart_items.length == 0" class="bg-secondary rounded mb-5 p-5">
+              <div class="row">
+            <!--<div class="col-lg-3 p-4">
+                  <img src="assets/img/carrito-de-compras.png" style="width: 100%">
+                </div> -->
+                <div class="col d-flex justify-content-center align-items-center">
+                  <div>
+                    <h5 class="mb-0">Tu carrito esta vacío. 🥺</h5>
+                    <dd><a routerLink="/productos">Seguir comprando...</a></dd>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Adresses -->
-            <h2 class="h4 mb-4">2. Dirección de envio</h2>
+            <h2 class="h4 mb-4">2. Dirección de envío</h2>
             <div class="row pb-3">
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
                     <div *ngIf="!principal_address" class="row">
-                      <h4>No tiene una dirección principal</h4>
+                      <div class="col">
+                        <h5 class="mb-0">No tienes una dirección principal</h5>
+                        <dd>Puedes agregar una dirección predeterminada <a routerLink="/cuenta/direccion">aquí.</a></dd>
+                      </div>
                     </div>
-                    <div class="row">
+                    <div *ngIf="principal_address" class="row">
                       <div class="col-6">
                         <dt>Destinatario:</dt>
                         <dd>{{ principal_address.receiver }}</dd>
@@ -96,7 +113,7 @@
             <h2 class="h4 mb-4">3. Métodos de envío</h2>
 
             <div *ngFor="let item of delivery, let i = index" class="custom-control custom-radio mb-3">
-              <input (change)="calculate_total()" [(ngModel)]="price_delivery" name="price_delivery" [value]="item.price" 
+              <input (change)="calculate_total(item.title)" [(ngModel)]="price_delivery" name="price_delivery" [value]="item.price" 
               type="radio" id="courier{{i}}" class="custom-control-input" style="cursor: pointer;">
               <label for="courier{{i}}" class="custom-control-label d-flex align-items-center" style="cursor: pointer;">
                 <span>
@@ -110,7 +127,7 @@
             <hr class="border-top-0 border-bottom pt-4 mb-4">
 
             <!-- Payment -->
-            <h2 class="h4 pt-2 mb-4">4. Payment Method</h2>
+            <h2 class="h4 pt-2 mb-4">4. Métodos de Pago</h2>
             <div class="row pb-4">
               <div class="col-lg-7">
                 <div class="accordion-alt" id="payment-methods">
@@ -129,12 +146,12 @@
                     <div class="collapse show" id="cc-card" data-parent="#payment-methods">
                       <div class="card-body pt-3 pb-0">
                         <div class="form-group mb-3">
-                          <label for="cc-number">Card number</label>
+                          <label for="cc-number">Tarjeta de Crédito</label>
                           <input type="text" id="cc-number" class="form-control form-control-lg" data-format="card" placeholder="0000 0000 0000 0000">
                         </div>
                         <div class="d-flex">
                           <div class="form-group mb-3 mr-3">
-                            <label for="cc-exp-date">Expiry date</label>
+                            <label for="cc-exp-date">Fecha de expiración</label>
                             <input type="text" id="cc-exp-date" class="form-control form-control-lg" data-format="date" placeholder="mm/yy">
                           </div>
                           <div class="form-group mb-3">
@@ -158,13 +175,7 @@
                       </div>
                     </div>
                     <div class="collapse" id="paypal-card" data-parent="#payment-methods">
-                      <div class="card-body pt-3 pb-0">
-                        <a class="d-inline-block mb-2" style="max-width: 300px;">
-                          <img src="https://createx.vercel.app/assets/img/ecommerce/checkout/paypal.png" alt="PayPal">
-                        </a>
-                        <a class="d-inline-block mb-2" style="max-width: 300px;">
-                          <img src="https://createx.vercel.app/assets/img/ecommerce/checkout/paypal-credit.png" alt="PayPal Credit">
-                        </a>
+                      <div class="card-body pt-3 pb-0" #paypalButton>
                       </div>
                     </div>
                   </div>
@@ -175,13 +186,13 @@
                       <div class="accordion-heading custom-control custom-radio" data-toggle="collapse" data-target="#cash-card">
                         <input type="radio" class="custom-control-input" id="cash" name="payment">
                         <label for="cash" class="custom-control-label">
-                          <strong class="d-block mr-3">Cash on delivery</strong>
+                          <strong class="d-block mr-3">Pago contra Entrega</strong>
                         </label>
                       </div>
                     </div>
                     <div class="collapse" id="cash-card" data-parent="#payment-methods">
                       <div class="card-body pt-3 pb-0">
-                        <p class="mb-2 text-muted">You have selected to pay with cash upon delivery.</p>
+                        <p class="mb-2 text-muted">Ha seleccionado pagar en efectivo en el momento de la entrega.</p>
                       </div>
                     </div>
                   </div>
@@ -192,10 +203,10 @@
             <hr class="mb-4 pb-2">
 
             <!-- Additional info -->
-            <h2 class="h4 mb-4">5. Additional Information (optional)</h2>
+            <h2 class="h4 mb-4">5. Información adicional: (Opcional)</h2>
             <div class="form-group">
-              <label for="ch-notes">Order notes</label>
-              <textarea id="ch-notes" class="form-control form-control-lg" rows="5" placeholder="Notes about your order, e.g. special noted for delivery."></textarea>
+              <label for="ch-notes">Notas de pedido</label>
+              <textarea [(ngModel)]="sale.notes" name="notes" id="ch-notes" class="form-control form-control-lg" rows="5" placeholder="Notas sobre su pedido, ejm: nota especial para la entrega."></textarea>
             </div>
           </div>
 
@@ -208,7 +219,7 @@
                 <div class="form-group">
                   <label for="promo-code">Aplicar cupón de descuento</label>
                   <div class="input-group input-group-lg">
-                    <input type="text" id="promo-code" class="form-control" placeholder="Ingresa el código aquí">
+                    <input [(ngModel)]="sale.coupon" name="coupon" type="text" id="promo-code" class="form-control" placeholder="Ingresa el código aquí">
                     <div class="input-group-append">
                       <button type="button" class="btn btn-primary">&nbsp;&nbsp;Aplicar&nbsp;&nbsp;</button>
                     </div>
