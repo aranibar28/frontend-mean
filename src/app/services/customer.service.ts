@@ -109,4 +109,9 @@ export class CustomerService {
     const url = `${base_url}/delete_address_customer/${id}`;
     return this.http.delete(url, this.headers);
   }
+
+  principal_address_customer(id: any): Observable<any> {
+    const url = `${base_url}/principal_address_customer/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }

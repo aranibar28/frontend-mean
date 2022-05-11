@@ -3,9 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 declare var noUiSlider: any;
-declare var iziToast: any;
 declare var lightGallery: any;
 declare var tns: any;
+declare var Cleave: any;
+declare var StickySidebar: any;
+
+declare var iziToast: any;
 declare var $: any;
 
 @Injectable({
@@ -40,6 +43,10 @@ export class PublicService {
 
   get_district(): Observable<any> {
     return this.http.get('./assets/distritos.json');
+  }
+
+  get_delivery(): Observable<any> {
+    return this.http.get('./assets/delivery.json');
   }
 
   success(msg: string) {
@@ -86,7 +93,7 @@ export class PublicService {
     $('.noUi-tooltip').css('font-size', '11px');
   }
 
-  init_assets() {
+  init_carousel_assets() {
     tns({
       container: '.cs-carousel-inner',
       controlsText: [
@@ -138,5 +145,18 @@ export class PublicService {
         1100: { items: 4, gutter: 30 },
       },
     });
+  }
+
+  init_payment_assets() {
+    setTimeout(() => {
+      new Cleave('#cc-number', {
+        creditCard: true,
+      });
+      new Cleave('#cc-exp-date', {
+        date: true,
+        datePattern: ['m', 'y'],
+      });
+      new StickySidebar('.sidebar-sticky', { topSpacing: 20 });
+    }, 500);
   }
 }

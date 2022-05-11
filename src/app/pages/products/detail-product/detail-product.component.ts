@@ -30,7 +30,7 @@ export class DetailProductComponent implements OnInit {
   ngOnInit(): void {
     this.list_product_by_slug();
     setTimeout(() => {
-      this.publicService.init_assets();
+      this.publicService.init_carousel_assets();
     }, 500);
   }
 

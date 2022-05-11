@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Envio Express",
+    "duration": "Fecha estimada: 3 días después de su compra",
+    "price": 25
+  },
+  {
+    "title": "Envio Estándar",
+    "duration": "Fecha estimada: Aprox. 1 mes después de su compra",
+    "price": 10
+  },
+  {
+    "title": "Recoger en tienda",
+    "duration": "Fecha estimada: A partir de mañana entre Lunes a Viernes de 9am. - 6pm",
+    "price": 0
+  }
+]

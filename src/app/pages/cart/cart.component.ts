@@ -12,6 +12,9 @@ var server = environment.server;
 export class CartComponent implements OnInit {
   public socket = io(server);
   public cart_items: Array<any> = [];
+  public principal_address: any = {};
+  public delivery: Array<any> = [];
+  public price_delivery = 0;
   public subtotal = 0;
   public total = 0;
 
@@ -22,6 +25,9 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.init_data();
+    this.principal_address_customer();
+    this.data_delivery();
+    this.publicService.init_payment_assets();
   }
 
   init_data() {
@@ -38,7 +44,7 @@ export class CartComponent implements OnInit {
     this.cart_items.forEach((element) => {
       this.subtotal = this.subtotal + parseInt(element.product.price);
     });
-    this.total = this.subtotal;
+    this.total = this.subtotal + this.price_delivery;
   }
 
   delete_item(id: any) {
@@ -49,5 +55,31 @@ export class CartComponent implements OnInit {
         this.init_data();
       },
     });
+  }
+
+  principal_address_customer() {
+    this.customerService
+      .principal_address_customer(this.customerService.id)
+      .subscribe({
+        next: (res) => {
+          if (res.data) {
+            this.principal_address = res.data;
+          } else {
+            this.principal_address = undefined;
+          }
+        },
+      });
+  }
+
+  data_delivery() {
+    this.publicService.get_delivery().subscribe({
+      next: (res) => {
+        this.delivery = res;
+      },
+    });
+  }
+
+  calculate_total() {
+    this.total = this.subtotal + this.price_delivery;
   }
 }
