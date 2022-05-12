@@ -138,4 +138,9 @@ export class CustomerService {
     const url = 'https://api.culqi.com/v2/charges';
     return this.http.post(url, data, headers);
   }
+
+  validate_coupon_public(coupon: any): Observable<any> {
+    const url = `${base_url}/validate_coupon_public/${coupon}`;
+    return this.http.get(url, this.headers);
+  }
 }

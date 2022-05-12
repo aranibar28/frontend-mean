@@ -23,6 +23,7 @@ export class CartComponent implements OnInit {
   public cart_items: Array<any> = [];
   public delivery: Array<any> = [];
   public price_delivery = 0;
+  public quantity = 0;
   public subtotal = 0;
   public total = 0;
 
@@ -34,6 +35,8 @@ export class CartComponent implements OnInit {
   public load_data = true;
   public load_btn = false;
   public card_data: any = {};
+  public message = '';
+  public discount = 0;
 
   constructor(
     private customerService: CustomerService,
@@ -73,7 +76,8 @@ export class CartComponent implements OnInit {
   calculate_cart() {
     this.subtotal = 0;
     this.cart_items.forEach((element) => {
-      this.subtotal = this.subtotal + parseInt(element.product.price);
+      this.quantity = element.quantity;
+      this.subtotal = this.subtotal + element.product.price * element.quantity;
     });
     this.total = this.subtotal + this.price_delivery;
   }
@@ -93,6 +97,38 @@ export class CartComponent implements OnInit {
         this.init_data();
       },
     });
+  }
+
+  // !CODE FIJO: SEPTEMBER2022
+  // !CODE PORCENTUAL: MAYO2029
+  validate_coupon() {
+    if (this.sale.coupon) {
+      if (this.sale.coupon.toString().length <= 25) {
+        this.message = '';
+        this.customerService
+          .validate_coupon_public(this.sale.coupon)
+          .subscribe({
+            next: (res) => {
+              if (res.data) {
+                this.message = '';
+                if (res.data.type == 'Valor Fijo') {
+                  this.discount = res.data.value;
+                  this.total = this.total - this.discount;
+                } else if (res.data.type == 'Porcentaje') {
+                  this.discount = (this.total * res.data.value) / 100;
+                  this.total = this.total - this.discount;
+                }
+              } else {
+                this.message = 'El cupón no se pudo canjear.';
+              }
+            },
+          });
+      } else {
+        this.message = 'El cupón debe tener menos de 25 carácteres.';
+      }
+    } else {
+      this.message = 'El cupón no es válido.';
+    }
   }
 
   init_delivery() {
