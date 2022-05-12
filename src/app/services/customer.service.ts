@@ -120,6 +120,11 @@ export class CustomerService {
     return this.http.post(url, data, this.headers);
   }
 
+  send_email_sale_customer(id: any): Observable<any> {
+    const url = `${base_url}/send_email_sale_customer/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
   get_token_culqi(data: any): Observable<any> {
     const token_public = 'pk_test_511ba1be6cbb98e4';
     let headers = { headers: { Authorization: `Bearer ${token_public}` } };

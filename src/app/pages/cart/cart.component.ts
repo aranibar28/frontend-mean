@@ -43,7 +43,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.init_data();
-    //this.init_paypal();
+    // this.init_paypal();
     this.init_delivery();
     this.init_principal_address();
     this.publicService.init_payment_assets();
@@ -142,9 +142,15 @@ export class CartComponent implements OnInit {
           this.sale.details = this.detail;
           this.customerService.register_sale_customer(this.sale).subscribe({
             next: (res) => {
-              console.log(res);
-              this.publicService.success('Compra Exitosa con Paypal');
-              this.router.navigateByUrl('/');
+              this.customerService
+                .send_email_sale_customer(res.sale._id)
+                .subscribe({
+                  next: (res) => {
+                    this.router.navigateByUrl('/');
+                    this.socket.emit('delete-item-cart', { data: res.data });
+                    this.publicService.success('Compra Exitosa con Paypal');
+                  },
+                });
             },
             error: (err) => {
               console.log(err);
@@ -185,8 +191,14 @@ export class CartComponent implements OnInit {
             this.sale.details = this.detail;
             this.customerService.register_sale_customer(this.sale).subscribe({
               next: (res) => {
+                this.customerService
+                  .send_email_sale_customer(res.sale._id)
+                  .subscribe({
+                    next: () => {
+                      this.router.navigateByUrl('/');
+                    },
+                  });
                 this.load_btn = false;
-                this.router.navigateByUrl('/');
                 this.socket.emit('delete-item-cart', { data: res.data });
                 this.publicService.success('Compra Exitosa con Culqi');
               },
