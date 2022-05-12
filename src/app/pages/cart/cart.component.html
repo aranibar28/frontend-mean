@@ -25,53 +25,63 @@
             <!-- Order review -->
             <h2 class="h4 mb-4">1. Detalles del pedido</h2>
 
-            <div *ngIf="cart_items.length >= 1" class="bg-secondary rounded mb-5">
-              <div *ngFor="let item of cart_items" class="media px-2 px-sm-4 py-4 border-bottom">
-                <a routerLink="/productos/{{ item.product.slug }}" style="min-width: 80px;">
-                  <img [src]="item.product.banner | image" width="80" alt="Product thumb">
-                </a>
-                <div class="media-body w-100 pl-3">
-                  <div class="d-sm-flex">
-                    <div class="pr-sm-3 w-100" style="max-width: 16rem;">
-                      <h3 class="font-size-sm mb-3">
-                        <a routerLink="/productos/{{ item.product.slug }}" class="nav-link font-weight-bold">{{ item.product.title }}</a>
-                      </h3>
-                      <ul class="list-unstyled font-size-xs mt-n2 mb-2">
-                        <li class="mb-0"><span class="text-muted">{{ item.product.name_variety }}: </span>{{ item.variety }}</li>
-                      </ul>
-                    </div>
-                    <div class="d-flex pr-sm-3">
-                      <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" [value]="item.quantity">
-                      <div class="text-nowrap pt-2"><strong class="text-danger">{{ item.product.price | currency: "S/. " }}</strong></div>
-                    </div>
-                    <div class="d-flex align-items-center flex-sm-column text-sm-center ml-sm-auto pt-3 pt-sm-0">
-                      <button (click)="delete_item(item._id)" class="btn btn-outline-primary btn-sm mr-2 mr-sm-0">Eliminar</button>
-                      <button class="btn btn-link btn-sm text-decoration-none pt-0 pt-sm-2 px-0 pb-0 mt-0 mt-sm-1">
-                        Mover a
-                        <i class="cxi-heart ml-1"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="px-3 px-sm-4 py-4 text-right">
-                <span class="text-muted">Subtotal:<strong class="text-dark font-size-lg ml-2">{{ subtotal | currency: "S/. " }}</strong></span>
-              </div>
-            </div>
-
-            <div *ngIf="cart_items.length == 0" class="bg-secondary rounded mb-5 p-5">
+            <ng-container *ngIf="load_data">
               <div class="row">
-            <!--<div class="col-lg-3 p-4">
-                  <img src="assets/img/carrito-de-compras.png" style="width: 100%">
-                </div> -->
-                <div class="col d-flex justify-content-center align-items-center">
-                  <div>
-                    <h5 class="mb-0">Tu carrito esta vacío. 🥺</h5>
-                    <dd><a routerLink="/productos">Seguir comprando...</a></dd>
+                <div class="col-12 text-center">
+                  <span>Cargando...</span>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="!load_data">
+              <div *ngIf="cart_items.length >= 1" class="bg-secondary rounded mb-5">
+                <div *ngFor="let item of cart_items" class="media px-2 px-sm-4 py-4 border-bottom">
+                  <a routerLink="/productos/{{ item.product.slug }}" style="min-width: 80px;">
+                    <img [src]="item.product.banner | image" width="80" alt="Product thumb">
+                  </a>
+                  <div class="media-body w-100 pl-3">
+                    <div class="d-sm-flex">
+                      <div class="pr-sm-3 w-100" style="max-width: 16rem;">
+                        <h3 class="font-size-sm mb-3">
+                          <a routerLink="/productos/{{ item.product.slug }}" class="nav-link font-weight-bold">{{ item.product.title }}</a>
+                        </h3>
+                        <ul class="list-unstyled font-size-xs mt-n2 mb-2">
+                          <li class="mb-0"><span class="text-muted">{{ item.product.name_variety }}: </span>{{ item.variety }}</li>
+                        </ul>
+                      </div>
+                      <div class="d-flex pr-sm-3">
+                        <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" [value]="item.quantity">
+                        <div class="text-nowrap pt-2"><strong class="text-danger">{{ item.product.price | currency: "S/. " }}</strong></div>
+                      </div>
+                      <div class="d-flex align-items-center flex-sm-column text-sm-center ml-sm-auto pt-3 pt-sm-0">
+                        <button (click)="delete_item(item._id)" class="btn btn-outline-primary btn-sm mr-2 mr-sm-0">Eliminar</button>
+                        <button class="btn btn-link btn-sm text-decoration-none pt-0 pt-sm-2 px-0 pb-0 mt-0 mt-sm-1">
+                          Mover a
+                          <i class="cxi-heart ml-1"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-3 px-sm-4 py-4 text-right">
+                  <span class="text-muted">Subtotal:<strong class="text-dark font-size-lg ml-2">{{ subtotal | currency: "S/. " }}</strong></span>
+                </div>
+              </div>
+  
+              <div *ngIf="cart_items.length == 0" class="bg-secondary rounded mb-5 p-5">
+                <div class="row">
+              <!--<div class="col-lg-3 p-4">
+                    <img src="assets/img/carrito-de-compras.png" style="width: 100%">
+                  </div> -->
+                  <div class="col d-flex justify-content-center align-items-center">
+                    <div>
+                      <h5 class="mb-0">Tu carrito esta vacío. 🥺</h5>
+                      <dd><a routerLink="/productos">Seguir comprando...</a></dd>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </ng-container>
 
             <!-- Adresses -->
             <h2 class="h4 mb-4">2. Dirección de envío</h2>
@@ -147,16 +157,16 @@
                       <div class="card-body pt-3 pb-0">
                         <div class="form-group mb-3">
                           <label for="cc-number">Tarjeta de Crédito</label>
-                          <input type="text" id="cc-number" class="form-control form-control-lg" data-format="card" placeholder="0000 0000 0000 0000">
+                          <input [(ngModel)]="card_data.ncard" name="ncard" type="text" id="cc-number" class="form-control form-control-lg" data-format="card" placeholder="0000 0000 0000 0000">
                         </div>
                         <div class="d-flex">
                           <div class="form-group mb-3 mr-3">
                             <label for="cc-exp-date">Fecha de expiración</label>
-                            <input type="text" id="cc-exp-date" class="form-control form-control-lg" data-format="date" placeholder="mm/yy">
+                            <input [(ngModel)]="card_data.exp" name="exp" type="text" id="cc-exp-date" class="form-control form-control-lg" data-format="date" placeholder="mm/yyyy">
                           </div>
                           <div class="form-group mb-3">
                             <label for="cc-cvc">CVC</label>
-                            <input type="text" id="cc-cvc" class="form-control form-control-lg" data-format="cvc" placeholder="000">
+                            <input [(ngModel)]="card_data.cvc" name="cvc" type="text" id="cc-cvc" class="form-control form-control-lg" data-format="cvc" placeholder="000">
                           </div>
                         </div>
                       </div>
@@ -248,7 +258,15 @@
                     <span class="h5 mb-0">{{ total | currency: "S/. " }}</span>
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-lg btn-block">Realizar Pedido</button>
+                <ng-container *ngIf="cart_items.length >= 1">
+                  <button *ngIf="!load_btn"(click)="init_culqi()" type="button" class="btn btn-primary btn-lg btn-block">
+                    Realizar Pedido
+                  </button>
+                  <button *ngIf="load_btn" type="button" class="btn btn-primary btn-lg btn-block" disabled>
+                    <span class="spinner-grow spinner-grow-sm mr-2" role="status" aria-hidden="true"></span>
+                    Procesando...
+                  </button>
+                </ng-container>
               </div>
             </div>
           </aside>

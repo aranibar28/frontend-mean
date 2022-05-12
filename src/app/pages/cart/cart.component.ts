@@ -3,6 +3,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { PublicService } from 'src/app/services/public.service';
 import { environment } from 'src/environments/environment';
 import { io } from 'socket.io-client';
+import { Router } from '@angular/router';
 var server = environment.server;
 declare var paypal: any;
 
@@ -28,15 +29,21 @@ export class CartComponent implements OnInit {
   public sale: any = {};
   public detail: any = [];
   public id = this.publicService.id; // <-- id cliente
+  public user = JSON.parse(this.publicService.user); // <- data cliente
+
+  public load_data = true;
+  public load_btn = false;
+  public card_data: any = {};
 
   constructor(
     private customerService: CustomerService,
-    private publicService: PublicService
+    private publicService: PublicService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.init_data();
-    this.init_paypal();
+    //this.init_paypal();
     this.init_delivery();
     this.init_principal_address();
     this.publicService.init_payment_assets();
@@ -56,7 +63,7 @@ export class CartComponent implements OnInit {
             variety: element.variety,
           });
         });
-
+        this.load_data = false;
         this.calculate_cart();
         this.calculate_total('Envío Gratis');
       },
@@ -119,10 +126,10 @@ export class CartComponent implements OnInit {
           return actions.order.create({
             purchase_units: [
               {
-                description: 'Nombre del pago',
+                description: 'Pago mi Tienda',
                 amount: {
                   currency_code: 'USD',
-                  value: 100,
+                  value: this.subtotal,
                 },
               },
             ],
@@ -133,10 +140,11 @@ export class CartComponent implements OnInit {
           const order_id = order.purchase_units[0].payments.captures[0].id;
           this.sale.transaction = order_id;
           this.sale.details = this.detail;
-          console.log(this.sale);
           this.customerService.register_sale_customer(this.sale).subscribe({
             next: (res) => {
               console.log(res);
+              this.publicService.success('Compra Exitosa con Paypal');
+              this.router.navigateByUrl('/');
             },
             error: (err) => {
               console.log(err);
@@ -147,5 +155,48 @@ export class CartComponent implements OnInit {
         onCancel: function (data: any, actions: any) {},
       })
       .render(this.paypalElement.nativeElement);
+  }
+
+  init_culqi() {
+    let expiration = this.card_data.exp.toString().split('/');
+
+    let data = {
+      card_number: this.card_data.ncard.toString().replace(/ /g, ''),
+      cvv: this.card_data.cvc,
+      expiration_month: expiration[0],
+      expiration_year: expiration[1].substr(0, 4),
+      email: this.user.email,
+    };
+
+    this.load_btn = true;
+
+    this.customerService.get_token_culqi(data).subscribe({
+      next: (res) => {
+        let charge = {
+          amount: this.subtotal + '00',
+          currency_code: 'PEN',
+          email: this.user.email,
+          source_id: res.id,
+        };
+
+        this.customerService.get_charge_culqi(charge).subscribe({
+          next: (res) => {
+            this.sale.transaction = res.id;
+            this.sale.details = this.detail;
+            this.customerService.register_sale_customer(this.sale).subscribe({
+              next: (res) => {
+                this.load_btn = false;
+                this.router.navigateByUrl('/');
+                this.socket.emit('delete-item-cart', { data: res.data });
+                this.publicService.success('Compra Exitosa con Culqi');
+              },
+            });
+          },
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

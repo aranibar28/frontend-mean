@@ -119,4 +119,18 @@ export class CustomerService {
     const url = `${base_url}/register_sale_customer`;
     return this.http.post(url, data, this.headers);
   }
+
+  get_token_culqi(data: any): Observable<any> {
+    const token_public = 'pk_test_511ba1be6cbb98e4';
+    let headers = { headers: { Authorization: `Bearer ${token_public}` } };
+    const url = 'https://secure.culqi.com/v2/tokens';
+    return this.http.post(url, data, headers);
+  }
+
+  get_charge_culqi(data: any): Observable<any> {
+    const token_private = 'sk_test_abe377a1d2e60fdb';
+    let headers = { headers: { Authorization: `Bearer ${token_private}` } };
+    const url = 'https://api.culqi.com/v2/charges';
+    return this.http.post(url, data, headers);
+  }
 }

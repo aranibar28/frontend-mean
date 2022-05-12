@@ -55,7 +55,7 @@ export class PublicService {
       titleColor: '#1dc74c',
       color: '#fff',
       class: 'text-success',
-      position: 'topRight',
+      position: 'bottomCenter',
       message: msg,
     });
   }
@@ -66,7 +66,7 @@ export class PublicService {
       titleColor: '#ff0000',
       color: '#fff',
       class: 'text-danger',
-      position: 'topRight',
+      position: 'bottomCenter',
       message: msg,
     });
   }
@@ -154,7 +154,7 @@ export class PublicService {
       });
       new Cleave('#cc-exp-date', {
         date: true,
-        datePattern: ['m', 'y'],
+        datePattern: ['m', 'Y'],
       });
       new StickySidebar('.sidebar-sticky', { topSpacing: 20 });
     }, 500);
