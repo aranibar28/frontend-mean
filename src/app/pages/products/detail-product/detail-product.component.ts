@@ -14,6 +14,7 @@ var server = environment.server;
 export class DetailProductComponent implements OnInit {
   public socket = io(server);
   public products_recomended: Array<any> = [];
+  public discount: any = undefined;
   public product: any = {};
   public slug: any;
 
@@ -32,6 +33,16 @@ export class DetailProductComponent implements OnInit {
     setTimeout(() => {
       this.publicService.init_carousel_assets();
     }, 500);
+
+    this.publicService.get_discount_active().subscribe({
+      next: (res) => {
+        if (res.data) {
+          this.discount = res.data[0];
+        } else {
+          this.discount = undefined;
+        }
+      },
+    });
   }
 
   list_product_by_slug() {

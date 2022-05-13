@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const base_url = environment.url;
 
 declare var noUiSlider: any;
 declare var lightGallery: any;
@@ -69,6 +71,11 @@ export class PublicService {
       position: 'bottomCenter',
       message: msg,
     });
+  }
+
+  get_discount_active(): Observable<any> {
+    const url = `${base_url}/get_discount_active`;
+    return this.http.get(url, this.headers);
   }
 
   slider() {

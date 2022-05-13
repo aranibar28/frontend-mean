@@ -17,6 +17,7 @@ export class IndexProductComponent implements OnInit {
   public products_count: Array<any> = [];
   public params_category: any;
   public cart_data: any = { variety: '', quantity: 1 };
+  public discount: any = undefined;
 
   public filter_category = '';
   public filter_product = '';
@@ -39,6 +40,15 @@ export class IndexProductComponent implements OnInit {
     this.list_products_by_params();
     this.list_categories();
     this.publicService.slider();
+    this.publicService.get_discount_active().subscribe({
+      next: (res) => {
+        if (res.data) {
+          this.discount = res.data[0];
+        } else {
+          this.discount = undefined;
+        }
+      },
+    });
   }
 
   list_products_by_params() {
