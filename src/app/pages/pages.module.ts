@@ -17,7 +17,7 @@ import { NoSanitizePipe } from '../pipes/nosanitizer.pipe';
 import { CartComponent } from './cart/cart.component';
 import { ImagePipe } from '../pipes/image.pipe';
 import { AddressComponent } from './customer/address/address.component';
-import { DiscountPipe } from '../pipes/discount.pipe';
+import { DiscountsPipe } from '../pipes/discounts.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { DiscountPipe } from '../pipes/discount.pipe';
     DetailProductComponent,
     CartComponent,
     ImagePipe,
-    DiscountPipe,
+    DiscountsPipe,
     AddressComponent,
   ],
   imports: [

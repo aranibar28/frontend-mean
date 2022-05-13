@@ -37,7 +37,7 @@
               <div *ngIf="cart_items.length >= 1" class="bg-secondary rounded mb-5">
                 <div *ngFor="let item of cart_items" class="media px-2 px-sm-4 py-4 border-bottom">
                   <a routerLink="/productos/{{ item.product.slug }}" style="min-width: 80px;">
-                    <img [src]="item.product.banner | image" width="80" alt="Product thumb">
+                    <img [src]="item.product.banner | image:'product'" width="80" alt="Product thumb">
                   </a>
                   <div class="media-body w-100 pl-3">
                     <div class="d-sm-flex">
@@ -49,9 +49,14 @@
                           <li class="mb-0"><span class="text-muted">{{ item.product.name_variety }}: </span>{{ item.variety }}</li>
                         </ul>
                       </div>
-                      <div class="d-flex pr-sm-3">
+                      <div *ngIf="!active" class="d-flex pr-sm-3">
                         <input [(ngModel)]="item.quantity" name="quantity" type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" [value]="item.quantity">
-                        <div class="text-nowrap pt-2"><strong class="text-danger">{{ item.product.price | currency: "S/. " }}</strong></div>
+                        <div class="text-nowrap pt-2"><strong class="text-muted">{{ item.product.price | currency: "S/. " }}</strong></div>
+                      </div>
+                      <div *ngIf="active" class="d-flex pr-sm-3">
+                        <input [(ngModel)]="item.quantity" name="quantity" type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" [value]="item.quantity">
+                        <div class="text-nowrap pt-2"><h6 class="text-danger mr-2">S/. {{ item.product.price | discounts: active.discount }}</h6></div>
+                        <div class="text-nowrap pt-2"><del class="text-muted">S/. {{ item.product.price }}</del></div>
                       </div>
                       <div class="d-flex align-items-center flex-sm-column text-sm-center ml-sm-auto pt-3 pt-sm-0">
                         <button (click)="delete_item(item._id)" class="btn btn-outline-primary btn-sm mr-2 mr-sm-0">Eliminar</button>

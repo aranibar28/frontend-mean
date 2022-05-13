@@ -37,6 +37,7 @@ export class CartComponent implements OnInit {
   public card_data: any = {};
   public message = '';
   public discount = 0;
+  public active: any = undefined;
 
   constructor(
     private customerService: CustomerService,
@@ -45,6 +46,7 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.get_discount();
     this.init_data();
     // this.init_paypal();
     this.init_delivery();
@@ -73,13 +75,26 @@ export class CartComponent implements OnInit {
     });
   }
 
+  get_discount() {
+    this.publicService.get_discount_active().subscribe({
+      next: (res) => (this.active = res ? res.data[0] : undefined),
+    });
+  }
+
   calculate_cart() {
     this.subtotal = 0;
-    this.cart_items.forEach((element) => {
-      this.quantity = element.quantity;
-      this.subtotal = this.subtotal + element.product.price * element.quantity;
-    });
-    this.total = this.subtotal + this.price_delivery;
+    if (!this.active) {
+      this.cart_items.forEach((e) => {
+        this.quantity = e.quantity;
+        this.subtotal = this.subtotal + e.product.price * e.quantity;
+      });
+    } else {
+      this.cart_items.forEach((e) => {
+        this.quantity = e.quantity;
+        let new_price = e.product.price * (1 - this.active.discount / 100);
+        this.subtotal = this.subtotal + new_price * e.quantity;
+      });
+    }
   }
 
   calculate_total(title_delivery: any) {

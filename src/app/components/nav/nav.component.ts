@@ -19,6 +19,7 @@ export class NavComponent implements OnInit {
   public public_user: any = undefined;
   public categories: any;
   public op_cart = false;
+  public discount: any = undefined;
 
   public cart_items: Array<any> = [];
   public subtotal = 0;
@@ -30,6 +31,7 @@ export class NavComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.get_discount_active();
     this.list_categories();
     this.list_customer_by_id();
     this.socket.on('new-login', this.list_customer_by_id.bind(this)); // login
@@ -74,11 +76,24 @@ export class NavComponent implements OnInit {
     });
   }
 
+  get_discount_active() {
+    this.publicService.get_discount_active().subscribe({
+      next: (res) => (this.discount = res ? res.data[0] : undefined),
+    });
+  }
+
   calculate_cart() {
     this.subtotal = 0;
-    this.cart_items.forEach((element) => {
-      this.subtotal = this.subtotal + parseInt(element.product.price);
-    });
+    if (!this.discount) {
+      this.cart_items.forEach((e) => {
+        this.subtotal = this.subtotal + e.product.price;
+      });
+    } else {
+      this.cart_items.forEach((e) => {
+        let new_price = e.product.price * (1 - this.discount.discount / 100);
+        this.subtotal = this.subtotal + new_price * e.quantity;
+      });
+    }
   }
 
   delete_item(id: any) {

@@ -210,7 +210,8 @@
             </ul>
             <div class="d-flex align-items-center">
               <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" [value]="item.quantity">
-              <div class="text-nowrap"><strong class="text-danger">{{ item.product.price | currency: "S/. " }}</strong></div>
+              <div *ngIf="!discount" class="text-nowrap"><strong class="text-muted">{{ item.product.price | currency: "S/. " }}</strong></div>
+              <div *ngIf="discount" class="text-nowrap"><strong class="text-danger">S/. {{ item.product.price | discounts: discount.discount }}</strong></div>
             </div>
             <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">
               Mover a

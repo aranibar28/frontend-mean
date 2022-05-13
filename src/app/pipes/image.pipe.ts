@@ -7,7 +7,11 @@ import { environment } from 'src/environments/environment';
 export class ImagePipe implements PipeTransform {
   url = environment.url;
 
-  transform(image: string) {
-    return `${this.url}/get_banner/${image}`;
+  transform(image: string, args?: any) {
+    if (args == 'product') {
+      return `${this.url}/get_banner/${image}`;
+    } else {
+      return `${this.url}/get_banner_discount/${image}`;
+    }
   }
 }
