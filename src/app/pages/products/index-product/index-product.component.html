@@ -13,19 +13,27 @@
       </nav>
 
       <section class="container pt-3 pb-5 pb-md-6 mb-2 mb-lg-0">
+        <!-- Promo banner -->
         <div *ngIf="discount" class="row mb-5">
           <div class="col-12">
-            <img [src]="discount.banner | image:'discount'" style="width:100% !important;">
+            <div class="py-5 px-md-5 px-4 bg-size-cover bg-position-center-y" style="background-image: url({{discount.banner | image:'discount'}})">
+              <div class="mt-md-3 mb-2 pb-2 p-md-2" style="max-width: 28rem">
+                <h3 class="mb-2 pb-1 font-size-sm text-uppercase">Desde {{ discount.start_date | date: 'dd/MM' }} hasta {{ discount.finish_date | date: 'dd/MM'}}</h3>
+                <h2 class="pb-3">{{ discount.title }}</h2>
+                <a class="btn btn-primary mb-2">Todos los Productos</a>
+              </div>
+              <div class="mb-md-3 pt-5 p-md-2">
+                <h3 class="mb-2 pb-1 font-size-sm text-uppercase">Descuento de {{ discount.discount }}%</h3>
+              </div>
+            </div>
           </div>
         </div>
-        <!-- Toolbar + Pagination -->
+
         <div class="row mb-4 pb-2">
           <div class="col-md-3 pr-lg-4 mb-3 mb-md-0">
-            <!-- Show / hide filters on Desktop -->
             <div class="d-none d-lg-block">
               <h3><i class="cxi-filter-1"></i> Filtros:</h3>
             </div>
-            <!-- Show / hide filters (off-canvas) on Mobile -->
             <button type="button" class="btn btn-primary btn-block mt-0 d-lg-none" data-toggle="offcanvas" data-target="filtersOffcanvas">
               <i class="cxi-filter-2 mr-1"></i>
               Mostrar Filtros
