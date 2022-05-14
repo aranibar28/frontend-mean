@@ -25,12 +25,12 @@
               <div class="cs-carousel-inner" data-carousel-options=''>
 
                 <!-- Product gallery item -->
-                <a class="cs-gallery-item" [href]="product.banner | image" data-sub-html='<h6 class="text-light">Imagen 1</h6>'>
+                <a class="cs-gallery-item" [href]="product.banner | image:'product'" data-sub-html='<h6 class="text-light">Imagen 1</h6>'>
                   <img class="rounded" [src]="product.banner | image:'product'" alt="Carousel image">
                   <span class="cs-gallery-caption">Imagen 1</span>
                 </a>
-                <a *ngFor="let item of product.galery, let i = index" class="cs-gallery-item" [href]="item.image | image" [attr.data-sub-html]="['<h6 class=\'text-light\'>Imagen '+(i + 2)+'</h6>']">
-                  <img class="rounded" [src]="item.image | image" alt="Carousel image">
+                <a *ngFor="let item of product.galery, let i = index" class="cs-gallery-item" [href]="item.image | image:'product'" [attr.data-sub-html]="['<h6 class=\'text-light\'>Imagen '+(i + 2)+'</h6>']">
+                  <img class="rounded" [src]="item.image | image:'product'" alt="Carousel image">
                   <span class="cs-gallery-caption">Imagen {{ i + 2 }}</span>
                 </a>
 
@@ -39,10 +39,10 @@
               <!-- Product gallery thumbnails -->
               <div class="cs-thumbnails" id="cs-thumbnails">
                 <button type="button" data-nav="1">
-                  <img [src]="product.banner | image" alt="Thumbnail">
+                  <img [src]="product.banner | image:'product'" alt="Thumbnail">
                 </button>
                 <button *ngFor="let item of product.galery, let i = index" type="button" [attr.data-nav]="i">
-                  <img [src]="item.image | image" alt="Thumbnail">
+                  <img [src]="item.image | image:'product'" alt="Thumbnail">
                 </button>
               </div>
             </div>

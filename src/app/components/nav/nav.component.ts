@@ -62,9 +62,9 @@ export class NavComponent implements OnInit {
   }
 
   list_categories() {
-    this.customerService
-      .list_categories_public()
-      .subscribe(({ data: { categories } }) => (this.categories = categories));
+    this.customerService.list_categories_public().subscribe({
+      next: (res) => (this.categories = res.data),
+    });
   }
 
   get_cart_customer() {

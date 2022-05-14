@@ -66,7 +66,7 @@ export class CustomerService {
   }
 
   list_categories_public(): Observable<any> {
-    const url = `${base_url}/get_config_public`;
+    const url = `${base_url}/read_category_public`;
     return this.http.get(url, this.headers);
   }
 

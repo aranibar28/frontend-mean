@@ -71,9 +71,9 @@ export class IndexProductComponent implements OnInit {
   }
 
   list_categories() {
-    this.customerService
-      .list_categories_public()
-      .subscribe(({ data: { categories } }) => (this.categories = categories));
+    this.customerService.list_categories_public().subscribe({
+      next: (res) => (this.categories = res.data),
+    });
   }
 
   list_products() {

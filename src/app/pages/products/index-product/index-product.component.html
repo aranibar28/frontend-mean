@@ -142,9 +142,9 @@
                         </li>
                         <li *ngFor="let item of categories, let i = index" class="cs-filter-item">
                           <div class="custom-control custom-checkbox">
-                            <input (change)="search_by_category()" [(ngModel)]="filter_cat_pro" type="radio" name="group1" class="custom-control-input" id="blazers-{{i}}" value="{{item.name}}">
+                            <input (change)="search_by_category()" [(ngModel)]="filter_cat_pro" type="radio" name="group1" class="custom-control-input" id="blazers-{{i}}" value="{{item.title}}">
                             <label for="blazers-{{i}}" class="custom-control-label">
-                              <span class="cs-filter-item-text">{{ item.name }}</span>
+                              <span class="cs-filter-item-text">{{ item.title }}</span>
                          <!-- <span class="pl-1 text-muted">x</span> -->
                             </label>
                           </div>

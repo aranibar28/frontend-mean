@@ -10,8 +10,12 @@ export class ImagePipe implements PipeTransform {
   transform(image: string, args?: any) {
     if (args == 'product') {
       return `${this.url}/get_banner/${image}`;
-    } else {
+    } else if (args == 'discount') {
       return `${this.url}/get_banner_discount/${image}`;
+    } else if (args == 'category') {
+      return `${this.url}/get_banner_category/${image}`;
+    } else {
+      return `${this.url}/get_banner/default.jpg`;
     }
   }
 }
