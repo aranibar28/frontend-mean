@@ -27,4 +27,14 @@ export class ProductsService {
     const url = `${base_url}/list_product_recomended/${category}`;
     return this.http.get(url, this.headers);
   }
+
+  list_product_news(): Observable<any> {
+    const url = `${base_url}/list_product_news`;
+    return this.http.get(url, this.headers);
+  }
+
+  list_product_sales(): Observable<any> {
+    const url = `${base_url}/list_product_sales`;
+    return this.http.get(url, this.headers);
+  }
 }
