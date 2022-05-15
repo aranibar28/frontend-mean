@@ -144,4 +144,14 @@ export class CustomerService {
     return this.http.get(url, this.headers);
   }
 
+  read_orders_customer(id: any): Observable<any> {
+    const url = `${base_url}/read_orders_customer/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
+  read_orders_by_id(id: any): Observable<any> {
+    const url = `${base_url}/read_orders_by_id/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
 }

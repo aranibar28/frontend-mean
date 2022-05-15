@@ -19,6 +19,8 @@ import { ImagePipe } from '../pipes/image.pipe';
 import { AddressComponent } from './customer/address/address.component';
 import { DiscountsPipe } from '../pipes/discounts.pipe';
 import { ContactComponent } from './contact/contact.component';
+import { IndexOrderComponent } from './customer/orders/index-order/index-order.component';
+import { DetailOrderComponent } from './customer/orders/detail-order/detail-order.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ContactComponent } from './contact/contact.component';
     DiscountsPipe,
     AddressComponent,
     ContactComponent,
+    IndexOrderComponent,
+    DetailOrderComponent,
   ],
   imports: [
     CommonModule,

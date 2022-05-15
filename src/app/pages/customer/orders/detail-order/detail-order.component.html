@@ -1,0 +1,148 @@
+<main class="cs-page-wrapper">
+    <nav class="bg-secondary mb-3" aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb breadcrumb-alt mb-0">
+            <li class="breadcrumb-item"><a routerLink="/"><i class="cxi-home"></i></a></li>
+            <li class="breadcrumb-item"><a routerLink="/cuenta/perfil">Mi Cuenta</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mis Pedidos</li>
+            </ol>
+        </div>
+    </nav>
+    
+      <section class="container pt-3 pt-lg-4 pb-5 pb-lg-6">
+        <div class="row pb-2 pb-lg-0">
+    
+          <aside class="col-xl-3 col-lg-4 pb-3 mb-4 mb-lg-0">
+            <app-sidebar></app-sidebar>
+          </aside>
+          
+        <div *ngIf="order" class="col-lg-8 ml-auto">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-sm-2">
+                <h1 class="h2 mb-0">PEDIDO #{{ id | uppercase }}</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-2">
+                  <div class="card card-body py-3 box-shadow">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <table class="table mb-0">
+                          <tbody>
+                            <tr>
+                              <th class="border-0 py-2 pl-0">Pedido N°:</th>
+                              <td class="border-0 py-2 px-0 text-muted">{{ id | uppercase }}</td>
+                            </tr>
+                            <tr>
+                              <th class="border-0 py-2 pl-0">Envío:</th>
+                              <td class="border-0 py-2 px-0 text-muted">{{ order.title_delivery }}</td>
+                            </tr>
+                            <tr>
+                              <th class="border-0 py-2 pl-0">Shipped on:</th>
+                              <td class="border-0 py-2 px-0 text-muted">{{ order.create_at | date }}</td>
+                            </tr>
+                           
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-lg-6">
+                        <table class="table mb-0">
+                          <tbody>
+                          
+                            <tr>
+                              <th class="border-0 py-2 pl-0">Venta:</th>
+                              <td class="border-0 py-2 px-0 text-muted">{{ order.code }}</td>
+                            </tr>
+                            <tr>
+                              <th class="border-0 py-2 pl-0">Estado:</th>
+                              <td class="border-0 py-2 px-0 text-muted">{{ order.status }}</td>
+                            </tr>
+                            <tr>
+                              <th class="border-0 py-2 pl-0">Transacción:</th>
+                              <td class="border-0 py-2 px-0 text-muted">{{ order.transaction }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div *ngIf="order.address" class="col-12 mt-3">
+                        <p>
+                            <span class="mr-2">{{ order.address.address }}. </span>
+                            <span *ngIf="order.address.region">{{ order.address.region }}, </span>
+                            <span *ngIf="order.address.province">{{ order.address.province }}, </span>
+                            <span *ngIf="order.address.district">{{ order.address.district }} - </span>
+                            <span>{{ order.address.country }}</span>.
+                        </p>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-bottom">
+                <div id="order-1" class="collapse show" data-parent="#orders">
+                  <div class="bg-secondary rounded mb-4">
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                        <tbody>
+                          <tr *ngFor="let item of details">
+                            <td class="border-top-0">
+                              <div class="media pl-2 py-2">
+                                <a href="shop-single.html" style="min-width: 80px;">
+                                  <img [src]="item.product.banner | image:'product'" width="80" alt="Product thumb">
+                                </a>
+                                <div class="media-body pl-3">
+                                  <h3 class="font-size-sm mb-3">
+                                    <a href="shop-single.html" class="nav-link font-weight-bold">{{ item.product.title }}</a>
+                                  </h3>
+                                  <ul class="list-unstyled font-size-xs mt-n2 mb-2">
+                                    <li class="mb-0"><span class="text-muted">{{ item.product.name_variety }}:</span> {{ item.variety }}</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </td>
+                            <td class="border-top-0">
+                              <div class="py-2">
+                                <div class="font-size-xs text-muted mb-1">Precio:</div>
+                                <div class="font-size-sm text-dark">{{ item.product.price | currency: "S/. " }}</div>
+                              </div>
+                            </td>
+                            <td class="border-top-0">
+                              <div class="py-2">
+                                <div class="font-size-xs text-muted mb-1">Cantidad:</div>
+                                <div class="font-size-sm text-dark">{{ item.quantity }}</div>
+                              </div>
+                            </td>
+                            <td class="border-top-0">
+                              <div class="py-2 pr-3 text-right">
+                                <div class="font-size-xs text-muted mb-1">Subtotal:</div>
+                                <div class="font-size-sm font-weight-bold text-dark">{{ item.subtotal * item.quantity | currency: "S/. " }}</div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr style="width: 100% !important; ">
+                            <td class="d-flex justify-content-between">
+                                <div class="py-2">
+                                    <span class="font-size-xs text-muted">Delivery: </span>
+                                    <span class="font-size-sm text-dark">{{ order.price_delivery | currency: "S/. "  }}</span>
+                                </div>
+                                <div class="py-2">
+                                    <span class="font-size-xs text-muted">Total: </span>
+                                    <span class="font-size-sm font-weight-bold text-dark">{{ order.subtotal | currency: "S/. " }}</span>
+                                </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div *ngIf="!order" class="col-lg-8 ml-auto">
+            <span>No hay data...</span>
+        </div>
+
+        </div>
+    </section>
+</main>
+    

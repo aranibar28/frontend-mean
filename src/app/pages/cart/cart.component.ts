@@ -230,7 +230,7 @@ export class CartComponent implements OnInit {
     this.customerService.get_token_culqi(data).subscribe({
       next: (res) => {
         let charge = {
-          amount: this.subtotal + '00',
+          amount: parseInt(this.subtotal + '00'),
           currency_code: 'PEN',
           email: this.user.email,
           source_id: res.id,

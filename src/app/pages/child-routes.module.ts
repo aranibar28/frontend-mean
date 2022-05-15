@@ -11,12 +11,16 @@ import { DetailProductComponent } from './products/detail-product/detail-product
 import { CartComponent } from './cart/cart.component';
 import { AddressComponent } from './customer/address/address.component';
 import { ContactComponent } from './contact/contact.component';
+import { IndexOrderComponent } from './customer/orders/index-order/index-order.component';
+import { DetailOrderComponent } from './customer/orders/detail-order/detail-order.component';
 
 const childRoutes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cuenta/perfil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'cuenta/direccion', component: AddressComponent, canActivate: [AuthGuard] },
+  { path: 'cuenta/ordenes', component: IndexOrderComponent, canActivate: [AuthGuard] },
+  { path: 'cuenta/ordenes/:id', component: DetailOrderComponent, canActivate: [AuthGuard] },
   { path: 'carrito', component: CartComponent, canActivate: [AuthGuard] },
 
   { path: 'productos', component: IndexProductComponent },
