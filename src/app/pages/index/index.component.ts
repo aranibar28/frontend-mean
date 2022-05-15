@@ -9,7 +9,7 @@ import { PublicService } from 'src/app/services/public.service';
 })
 export class IndexComponent implements OnInit {
   public discounts: any = undefined;
-  public categories: any = {};
+  public categories: Array<any> = [];
   public new_products: Array<any> = [];
   public sales_products: Array<any> = [];
 
@@ -36,11 +36,9 @@ export class IndexComponent implements OnInit {
   }
 
   get_categories() {
-    this.customerService
-      .list_categories_public()
-      .subscribe(({ data: { categories } }) => {
-        this.categories = categories;
-      });
+    this.customerService.list_categories_public().subscribe(({ data }) => {
+      this.categories = data;
+    });
   }
 
   get_new_products() {

@@ -10,6 +10,7 @@ import { IndexProductComponent } from './products/index-product/index-product.co
 import { DetailProductComponent } from './products/detail-product/detail-product.component';
 import { CartComponent } from './cart/cart.component';
 import { AddressComponent } from './customer/address/address.component';
+import { ContactComponent } from './contact/contact.component';
 
 const childRoutes: Routes = [
   { path: '', component: IndexComponent },
@@ -21,6 +22,8 @@ const childRoutes: Routes = [
   { path: 'productos', component: IndexProductComponent },
   { path: 'productos/:slug', component: DetailProductComponent },
   { path: 'productos/categoria/:category', component: IndexProductComponent },
+
+  { path: 'contacto', component: ContactComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -78,6 +78,11 @@ export class PublicService {
     return this.http.get(url, this.headers);
   }
 
+  send_message_contact(data: any): Observable<any> {
+    const url = `${base_url}/send_message_contact`;
+    return this.http.post(url, data, this.headers);
+  }
+
   init_menu() {
     setTimeout(() => {
       tns({

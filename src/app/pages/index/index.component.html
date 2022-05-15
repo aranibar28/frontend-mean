@@ -241,71 +241,22 @@
 
     <!-- Popular categories -->
     <section class="container mt-1 mb-3 my-sm-4 py-5 py-lg-6">
-        <h2 class="h1 mb-5 pb-3 text-center">Categorias Populares</h2>
+        <h2 class="h1 mb-5 pb-3 text-center">Categorías Populares</h2>
         <div class="cs-carousel cs-nav-outside">
           <div class="cs-carousel-inner cs-carousel-inner-five" data-carousel-options='{
             
           }'>
 
             <!-- Category -->
-            <div class="pb-2">
+            <div *ngFor="let item of categories" class="pb-2">
               <a class="d-block cs-image-scale cs-heading-highlight text-center">
                 <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/04.jpg" alt="Category image">
+                  <img [src]="item.banner | image:'category'" alt="Category image">
                 </div>
-                <h3 class="h5 mb-3">Tops</h3>
+                <h3 class="h5 mb-3">{{ item.title }}</h3>
               </a>
             </div>
 
-            <!-- Category -->
-            <div class="pb-2">
-              <a class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/05.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">T-shirts</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/06.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Caps</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/07.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Sandals</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/08.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Jackets</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/09.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Coats</h3>
-              </a>
-            </div>
           </div>
         </div>
     </section>

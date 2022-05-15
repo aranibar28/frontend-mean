@@ -143,4 +143,5 @@ export class CustomerService {
     const url = `${base_url}/validate_coupon_public/${coupon}`;
     return this.http.get(url, this.headers);
   }
+
 }
