@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +12,10 @@ export class SidebarComponent implements OnInit {
   public user: any = undefined;
   public user_lc: any = undefined;
 
-  constructor(private customerService: CustomerService) {
+  constructor(
+    private customerService: CustomerService,
+    private router: Router
+  ) {
     if (this.id) {
       this.customerService.list_customer_by_id_invited(this.id).subscribe({
         next: (res) => {
@@ -31,4 +36,20 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  logout() {
+    Swal.fire({
+      text: '¿Quieres cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        this.router.navigateByUrl('/');
+        window.location.reload();
+      }
+    });
+  }
 }

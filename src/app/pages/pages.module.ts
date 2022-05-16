@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BarRatingModule } from 'ngx-bar-rating';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { ComponentsModule } from '../components/components.module';
@@ -21,6 +22,7 @@ import { DiscountsPipe } from '../pipes/discounts.pipe';
 import { ContactComponent } from './contact/contact.component';
 import { IndexOrderComponent } from './customer/orders/index-order/index-order.component';
 import { DetailOrderComponent } from './customer/orders/detail-order/detail-order.component';
+import { IndexReviewComponent } from './customer/reviews/index-review/index-review.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { DetailOrderComponent } from './customer/orders/detail-order/detail-orde
     ContactComponent,
     IndexOrderComponent,
     DetailOrderComponent,
+    IndexReviewComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,7 @@ import { DetailOrderComponent } from './customer/orders/detail-order/detail-orde
     PagesRoutingModule,
     ComponentsModule,
     NgxPaginationModule,
+    BarRatingModule,
   ],
 })
 export class PagesModule {}

@@ -13,6 +13,7 @@ import { AddressComponent } from './customer/address/address.component';
 import { ContactComponent } from './contact/contact.component';
 import { IndexOrderComponent } from './customer/orders/index-order/index-order.component';
 import { DetailOrderComponent } from './customer/orders/detail-order/detail-order.component';
+import { IndexReviewComponent } from './customer/reviews/index-review/index-review.component';
 
 const childRoutes: Routes = [
   { path: '', component: IndexComponent },
@@ -21,8 +22,10 @@ const childRoutes: Routes = [
   { path: 'cuenta/direccion', component: AddressComponent, canActivate: [AuthGuard] },
   { path: 'cuenta/ordenes', component: IndexOrderComponent, canActivate: [AuthGuard] },
   { path: 'cuenta/ordenes/:id', component: DetailOrderComponent, canActivate: [AuthGuard] },
-  { path: 'carrito', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'cuenta/reviews', component: IndexReviewComponent, canActivate: [AuthGuard] },
 
+  { path: 'carrito', component: CartComponent, canActivate: [AuthGuard] },
+  
   { path: 'productos', component: IndexProductComponent },
   { path: 'productos/:slug', component: DetailProductComponent },
   { path: 'productos/categoria/:category', component: IndexProductComponent },

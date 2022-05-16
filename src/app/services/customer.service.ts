@@ -154,4 +154,18 @@ export class CustomerService {
     return this.http.get(url, this.headers);
   }
 
+  send_review_product(data: any): Observable<any> {
+    const url = `${base_url}/send_review_product`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  read_review_product(id: any): Observable<any> {
+    const url = `${base_url}/read_review_product/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
+  read_review_customer(id: any): Observable<any> {
+    const url = `${base_url}/read_review_customer/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }

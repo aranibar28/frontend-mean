@@ -96,6 +96,43 @@
                                   <ul class="list-unstyled font-size-xs mt-n2 mb-2">
                                     <li class="mb-0"><span class="text-muted">{{ item.product.name_variety }}:</span> {{ item.variety }}</li>
                                   </ul>
+                                  <a *ngIf="!item.status" (click)="open_modal(item)" data-toggle="modal" [attr.data-target]="'#review-'+item._id">Emitir Reseña</a>
+                                  <span  *ngIf="item.status" class="badge badge-warning">Reseña emitida</span>
+
+                                  <div class="modal fade" id="review-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Emitir Reseña</h4>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="row">
+                                            <div class="col-sm-12 form-group">
+                                              <label>Reseña</label>
+                                              <textarea [(ngModel)]="review.review" name="review" cols="10" class="form-control" placeholder="Que te parecio el producto?"></textarea>
+                                            </div>
+                                            <div class="col-sm-12 form-group">
+                                              <label>Estrellas</label>
+                                              <select [(ngModel)]="review.starts" name="starts" class="form-control">
+                                                <option value="" selected disabled>Seleccionar</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                          <button (click)="register(item._id)"  class="btn btn-primary btn-sm" type="button">Enviar</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
                                 </div>
                               </div>
                             </td>
@@ -137,6 +174,8 @@
                 </div>
               </div>
         </div>
+
+        <!-- MOOOOOOOOOOOOOOOOOOODAL -->
 
         <div *ngIf="!order" class="col-lg-8 ml-auto">
             <span>No hay data...</span>
