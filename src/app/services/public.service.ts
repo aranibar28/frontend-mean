@@ -83,6 +83,11 @@ export class PublicService {
     return this.http.post(url, data, this.headers);
   }
 
+  list_reviews_public(id: any): Observable<any> {
+    const url = `${base_url}/list_reviews_public/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
   init_menu() {
     setTimeout(() => {
       tns({
